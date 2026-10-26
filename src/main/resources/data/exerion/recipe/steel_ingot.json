@@ -1,7 +1,10 @@
 {
   "type": "minecraft:smelting",
-  "ingredient": "exerion:steel_compound",
-  "result": "exerion:steel_ingot",
+  "category": "misc",
+  "cookingtime": 300,
   "experience": 1.0,
-  "cookingtime": 300
+  "ingredient": "exerion:steel_compound",
+  "result": {
+    "id": "exerion:steel_ingot"
+  }
 }
