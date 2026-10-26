@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- */
 package net.exerion.compat.jei;
 
 import java.util.ArrayList;
@@ -29,8 +21,8 @@ public class ExerionRecipeMaker {
         list.add(new CrusherJeiRecipe(new ItemStack((ItemLike)Items.DEEPSLATE_IRON_ORE), new ItemStack((ItemLike)Items.RAW_IRON, 2)));
         list.add(new CrusherJeiRecipe(new ItemStack((ItemLike)Items.COPPER_ORE), new ItemStack((ItemLike)Items.RAW_COPPER, 2)));
         list.add(new CrusherJeiRecipe(new ItemStack((ItemLike)Items.DEEPSLATE_COPPER_ORE), new ItemStack((ItemLike)Items.RAW_COPPER, 2)));
-        list.add(new CrusherJeiRecipe(new ItemStack((ItemLike)ModBlocks.EXERION_ORE), new ItemStack((ItemLike)ModItems.RAW_EXERION, 2)));
-        list.add(new CrusherJeiRecipe(new ItemStack((ItemLike)ModBlocks.DEEPSLATE_EXERION_ORE), new ItemStack((ItemLike)ModItems.RAW_EXERION, 2)));
+        list.add(new CrusherJeiRecipe(new ItemStack(ModBlocks.EXERION_ORE), new ItemStack((ItemLike)ModItems.RAW_EXERION, 2)));
+        list.add(new CrusherJeiRecipe(new ItemStack(ModBlocks.DEEPSLATE_EXERION_ORE), new ItemStack((ItemLike)ModItems.RAW_EXERION, 2)));
         return list;
     }
 }

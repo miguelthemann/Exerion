@@ -1,19 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.ChatFormatting
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.components.Button
- *  net.minecraft.client.gui.components.events.GuiEventListener
- *  net.minecraft.client.gui.screens.Screen
- *  net.minecraft.client.resources.language.I18n
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.block.Blocks
- */
 package net.exerion.client;
 
 import java.util.ArrayList;
@@ -64,7 +48,7 @@ extends Screen {
                 this.rebuildGuideItems();
             }).bounds(startX, startY + i * 18, tabW, tabH).build();
             this.tabButtons.add(tabBtn);
-            this.addRenderableWidget((GuiEventListener)tabBtn);
+            this.addRenderableWidget(tabBtn);
         }
         this.updateTabButtons();
         this.rebuildGuideItems();
@@ -87,44 +71,44 @@ extends Screen {
             }
             case 2: {
                 this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModItems.COPPER_GEAR), "gui.exerion.guide.copper.gear", "gui.exerion.guide.copper.gear.desc", null));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.WATER_WHEEL), "gui.exerion.guide.copper.water_wheel", "gui.exerion.guide.copper.water_wheel.desc", null));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.WATER_WHEEL), "gui.exerion.guide.copper.water_wheel", "gui.exerion.guide.copper.water_wheel.desc", null));
                 break;
             }
             case 3: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.GEAR_PRESS), "gui.exerion.guide.iron.gear_press", "gui.exerion.guide.iron.gear_press.desc", new ItemStack[]{new ItemStack((ItemLike)Items.IRON_BLOCK), new ItemStack((ItemLike)Items.PISTON), new ItemStack((ItemLike)Items.IRON_BLOCK), new ItemStack((ItemLike)Items.IRON_INGOT), ItemStack.EMPTY, new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Blocks.SMOOTH_STONE), new ItemStack((ItemLike)Blocks.SMOOTH_STONE), new ItemStack((ItemLike)Blocks.SMOOTH_STONE)}));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.CRUSHER), "gui.exerion.guide.iron.crusher", "gui.exerion.guide.iron.crusher.desc", new ItemStack[]{new ItemStack((ItemLike)Items.FLINT), new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Items.FLINT), new ItemStack((ItemLike)Items.IRON_INGOT), ItemStack.EMPTY, new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Blocks.COBBLESTONE), new ItemStack((ItemLike)Blocks.COBBLESTONE), new ItemStack((ItemLike)Blocks.COBBLESTONE)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.GEAR_PRESS), "gui.exerion.guide.iron.gear_press", "gui.exerion.guide.iron.gear_press.desc", new ItemStack[]{new ItemStack((ItemLike)Items.IRON_BLOCK), new ItemStack((ItemLike)Items.PISTON), new ItemStack((ItemLike)Items.IRON_BLOCK), new ItemStack((ItemLike)Items.IRON_INGOT), ItemStack.EMPTY, new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Blocks.SMOOTH_STONE), new ItemStack((ItemLike)Blocks.SMOOTH_STONE), new ItemStack((ItemLike)Blocks.SMOOTH_STONE)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.CRUSHER), "gui.exerion.guide.iron.crusher", "gui.exerion.guide.iron.crusher.desc", new ItemStack[]{new ItemStack((ItemLike)Items.FLINT), new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Items.FLINT), new ItemStack((ItemLike)Items.IRON_INGOT), ItemStack.EMPTY, new ItemStack((ItemLike)Items.IRON_INGOT), new ItemStack((ItemLike)Blocks.COBBLESTONE), new ItemStack((ItemLike)Blocks.COBBLESTONE), new ItemStack((ItemLike)Blocks.COBBLESTONE)}));
                 break;
             }
             case 4: {
                 this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModItems.WRENCH), "gui.exerion.guide.mech.wrench", "gui.exerion.guide.mech.wrench.desc", new ItemStack[]{ItemStack.EMPTY, new ItemStack((ItemLike)Items.GOLD_INGOT), new ItemStack((ItemLike)Items.GOLD_INGOT), new ItemStack((ItemLike)Items.GOLD_INGOT), new ItemStack((ItemLike)ModItems.COPPER_GEAR), new ItemStack((ItemLike)Items.GOLD_INGOT), ItemStack.EMPTY, new ItemStack((ItemLike)Items.STICK), ItemStack.EMPTY}));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.SHAFT), "gui.exerion.guide.mech.shaft", "gui.exerion.guide.mech.shaft.desc", null));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.SHAFT), "gui.exerion.guide.mech.shaft", "gui.exerion.guide.mech.shaft.desc", null));
                 break;
             }
             case 5: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.COAL_BOILER), "gui.exerion.guide.steel.boiler", "gui.exerion.guide.steel.boiler.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Items.BUCKET), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Blocks.FURNACE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.STEAM_TURBINE), "gui.exerion.guide.steel.turbine", "gui.exerion.guide.steel.turbine.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModBlocks.SHAFT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.COAL_BOILER), "gui.exerion.guide.steel.boiler", "gui.exerion.guide.steel.boiler.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Items.BUCKET), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Blocks.FURNACE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.STEAM_TURBINE), "gui.exerion.guide.steel.turbine", "gui.exerion.guide.steel.turbine.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack(ModBlocks.SHAFT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_GEAR), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
                 break;
             }
             case 6: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.ELECTRIC_GENERATOR), "gui.exerion.guide.ind.generator", "gui.exerion.guide.ind.generator.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.EXERION_ROD), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Blocks.FURNACE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack((ItemLike)ModBlocks.BATBOX), new ItemStack((ItemLike)ModItems.EXERION_PLATE)}));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.ELECTRIC_CRUSHER), "gui.exerion.guide.ind.elec_crusher", "gui.exerion.guide.ind.elec_crusher.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.LOGIC_CHIP), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack((ItemLike)ModBlocks.CRUSHER), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModBlocks.BATBOX), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.ELECTRIC_GENERATOR), "gui.exerion.guide.ind.generator", "gui.exerion.guide.ind.generator.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.EXERION_ROD), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)Blocks.FURNACE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack(ModBlocks.BATBOX), new ItemStack((ItemLike)ModItems.EXERION_PLATE)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.ELECTRIC_CRUSHER), "gui.exerion.guide.ind.elec_crusher", "gui.exerion.guide.ind.elec_crusher.desc", new ItemStack[]{new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.LOGIC_CHIP), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack(ModBlocks.CRUSHER), new ItemStack((ItemLike)ModItems.EXERION_PLATE), new ItemStack((ItemLike)ModItems.STEEL_INGOT), new ItemStack(ModBlocks.BATBOX), new ItemStack((ItemLike)ModItems.STEEL_INGOT)}));
                 break;
             }
             case 7: {
                 this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModItems.LOGIC_CHIP), "gui.exerion.guide.dig.logic", "gui.exerion.guide.dig.logic.desc", null));
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.PROGRESSION_TERMINAL), "gui.exerion.guide.dig.terminal", "gui.exerion.guide.dig.terminal.desc", null));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.PROGRESSION_TERMINAL), "gui.exerion.guide.dig.terminal", "gui.exerion.guide.dig.terminal.desc", null));
                 break;
             }
             case 8: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.STEEL_SOLAR_PANEL), "gui.exerion.guide.adv.solar", "gui.exerion.guide.adv.solar.desc", new ItemStack[]{new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.LOGIC_CHIP), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.LOGIC_CHIP)}));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.STEEL_SOLAR_PANEL), "gui.exerion.guide.adv.solar", "gui.exerion.guide.adv.solar.desc", new ItemStack[]{new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)Blocks.GLASS), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.CARBON_PLATE), new ItemStack((ItemLike)ModItems.LOGIC_CHIP), new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD), new ItemStack((ItemLike)ModItems.LOGIC_CHIP)}));
                 break;
             }
             case 9: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.FREQUENCY_ENDER_CHEST), "gui.exerion.guide.quant.chest", "gui.exerion.guide.quant.chest.desc", null));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.FREQUENCY_ENDER_CHEST), "gui.exerion.guide.quant.chest", "gui.exerion.guide.quant.chest.desc", null));
                 break;
             }
             case 10: {
-                this.guideItems.add(new GuideItem(new ItemStack((ItemLike)ModBlocks.MINING_LASER), "gui.exerion.guide.cosm.laser", "gui.exerion.guide.cosm.laser.desc", null));
+                this.guideItems.add(new GuideItem(new ItemStack(ModBlocks.MINING_LASER), "gui.exerion.guide.cosm.laser", "gui.exerion.guide.cosm.laser.desc", null));
             }
         }
         for (GuideItem item : this.guideItems) {

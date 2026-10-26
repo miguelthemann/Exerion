@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- */
 package net.exerion.client;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;

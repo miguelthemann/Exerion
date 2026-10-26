@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.Codec
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.chat.MutableComponent
- */
 package net.exerion.progression;
 
 import com.mojang.serialization.Codec;

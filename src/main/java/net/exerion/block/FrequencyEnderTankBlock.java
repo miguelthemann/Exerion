@@ -1,30 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.MapCodec
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.context.BlockPlaceContext
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.BaseEntityBlock
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.RenderShape
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.entity.BlockEntityTicker
- *  net.minecraft.world.level.block.entity.BlockEntityType
- *  net.minecraft.world.level.block.state.BlockBehaviour$Properties
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.StateDefinition$Builder
- *  net.minecraft.world.level.block.state.properties.BlockStateProperties
- *  net.minecraft.world.level.block.state.properties.EnumProperty
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.phys.BlockHitResult
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block;
 
 import com.mojang.serialization.MapCodec;
@@ -66,7 +39,7 @@ extends BaseEntityBlock {
 
     public FrequencyEnderTankBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, (Comparable)Direction.NORTH));
+        this.registerDefaultState((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -78,7 +51,7 @@ extends BaseEntityBlock {
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return (BlockState)this.defaultBlockState().setValue(FACING, (Comparable)context.getHorizontalDirection().getOpposite());
+        return (BlockState)this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Nullable

@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.components.Button
- *  net.minecraft.client.gui.components.events.GuiEventListener
- *  net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.inventory.AbstractContainerMenu
- */
 package net.exerion.client;
 
 import java.util.List;
@@ -29,7 +17,7 @@ extends AbstractContainerScreen<FrequencyEnderChestMenu> {
     private static final String[] COLOR_NAMES = new String[]{"White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
 
     public FrequencyEnderChestScreen(FrequencyEnderChestMenu menu, Inventory playerInventory, Component title) {
-        super((AbstractContainerMenu)menu, playerInventory, title, 176, 166);
+        super(menu, playerInventory, title, 176, 166);
     }
 
     protected void init() {
@@ -37,17 +25,17 @@ extends AbstractContainerScreen<FrequencyEnderChestMenu> {
         this.titleLabelX = 8;
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        this.addRenderableWidget((GuiEventListener)Button.builder((Component)Component.literal((String)"L1"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.literal("L1"), btn -> {
             if (this.minecraft != null && this.minecraft.gameMode != null) {
                 this.minecraft.gameMode.handleInventoryButtonClick(((FrequencyEnderChestMenu)this.menu).containerId, 0);
             }
         }).bounds(x + 110, y + 4, 18, 12).build());
-        this.addRenderableWidget((GuiEventListener)Button.builder((Component)Component.literal((String)"L2"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.literal("L2"), btn -> {
             if (this.minecraft != null && this.minecraft.gameMode != null) {
                 this.minecraft.gameMode.handleInventoryButtonClick(((FrequencyEnderChestMenu)this.menu).containerId, 1);
             }
         }).bounds(x + 130, y + 4, 18, 12).build());
-        this.addRenderableWidget((GuiEventListener)Button.builder((Component)Component.literal((String)"L3"), btn -> {
+        this.addRenderableWidget(Button.builder(Component.literal("L3"), btn -> {
             if (this.minecraft != null && this.minecraft.gameMode != null) {
                 this.minecraft.gameMode.handleInventoryButtonClick(((FrequencyEnderChestMenu)this.menu).containerId, 2);
             }

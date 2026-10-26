@@ -1,22 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.ChatFormatting
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.InteractionHand
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.context.UseOnContext
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.state.BlockState
- */
 package net.exerion.item;
 
 import net.exerion.progression.EraProgressionRegistry;
@@ -61,8 +42,8 @@ extends Item {
             BlockState state = world.getBlockState(pos);
             TechnologyEra required = EraProgressionRegistry.getRequiredEra(state.getBlock());
             String blockName = Component.translatable((String)state.getBlock().getDescriptionId()).getString();
-            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.block_info", (Object[])new Object[]{blockName}).withStyle(ChatFormatting.AQUA));
-            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.era_info", (Object[])new Object[]{required.getDisplayNameComponent()}).withStyle(ChatFormatting.LIGHT_PURPLE));
+            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.block_info", new Object[]{blockName}).withStyle(ChatFormatting.AQUA));
+            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.era_info", new Object[]{required.getDisplayNameComponent()}).withStyle(ChatFormatting.LIGHT_PURPLE));
             stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getDamageValue() + 10));
             world.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 0.8f, 1.5f);
         }
@@ -80,7 +61,7 @@ extends Item {
         }
         if (!world.isClientSide()) {
             TechnologyEra current = PlayerEraManager.getPlayerEra(player);
-            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.current_era", (Object[])new Object[]{current.getDisplayNameComponent()}).withStyle(ChatFormatting.YELLOW));
+            player.sendSystemMessage((Component)Component.translatable((String)"message.exerion.scanner.current_era", new Object[]{current.getDisplayNameComponent()}).withStyle(ChatFormatting.YELLOW));
             stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getDamageValue() + 10));
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.8f, 1.2f);
         }

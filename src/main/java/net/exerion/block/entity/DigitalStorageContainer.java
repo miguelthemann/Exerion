@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.world.Container
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- */
 package net.exerion.block.entity;
 
 import java.util.ArrayList;
@@ -39,19 +28,20 @@ implements Container {
             return;
         }
         int radius = 6;
+        BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
         for (int x = -radius; x <= radius; ++x) {
             for (int y = -radius; y <= radius; ++y) {
                 for (int z = -radius; z <= radius; ++z) {
-                    BlockEntity be;
-                    BlockPos pos = this.terminalPos.offset(x, y, z);
-                    if (pos.equals((Object)this.terminalPos) || !((be = this.level.getBlockEntity(pos)) instanceof Container)) continue;
-                    Container container = (Container)be;
-                    if (be instanceof DigitalStorageTerminalBlockEntity) continue;
+                    if (x == 0 && y == 0 && z == 0) continue;
+                    mpos.set(this.terminalPos.getX() + x, this.terminalPos.getY() + y, this.terminalPos.getZ() + z);
+                    BlockEntity be = this.level.getBlockEntity(mpos);
+                    if (!(be instanceof Container container) || be instanceof DigitalStorageTerminalBlockEntity) continue;
                     int size = container.getContainerSize();
                     for (int s = 0; s < size; ++s) {
                         this.slots.add(new SlotRef(container, s));
-                        if (this.slots.size() < 54) continue;
-                        return;
+                        if (this.slots.size() >= 54) {
+                            return;
+                        }
                     }
                 }
             }

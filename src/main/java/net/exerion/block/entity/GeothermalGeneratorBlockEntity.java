@@ -1,40 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.particles.ParticleOptions
- *  net.minecraft.core.particles.ParticleTypes
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Blocks
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.BlockStateProperties
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.menu.GeothermalGeneratorMenu;
@@ -72,18 +37,12 @@ public class GeothermalGeneratorBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 2){
-        final /* synthetic */ GeothermalGeneratorBlockEntity this$0;
-        {
-            GeothermalGeneratorBlockEntity geothermalGeneratorBlockEntity = this$0;
-            Objects.requireNonNull(geothermalGeneratorBlockEntity);
-            this.this$0 = geothermalGeneratorBlockEntity;
-            super(arg0);
-        }
-
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private final SimpleContainer inventory = new SimpleContainer(2) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            GeothermalGeneratorBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
@@ -91,20 +50,15 @@ IEnergyStorage {
     private int lavaBuffer = 0;
     private final int maxLava = 4000;
     private int scanCooldown = 0;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ GeothermalGeneratorBlockEntity this$0;
-        {
-            GeothermalGeneratorBlockEntity geothermalGeneratorBlockEntity = this$0;
-            Objects.requireNonNull(geothermalGeneratorBlockEntity);
-            this.this$0 = geothermalGeneratorBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
-                case 2 -> this.this$0.lavaBuffer;
-                case 3 -> this.this$0.maxLava;
+                case 0 -> GeothermalGeneratorBlockEntity.this.energy;
+                case 1 -> GeothermalGeneratorBlockEntity.this.maxEnergy;
+                case 2 -> GeothermalGeneratorBlockEntity.this.lavaBuffer;
+                case 3 -> GeothermalGeneratorBlockEntity.this.maxLava;
                 default -> 0;
             };
         }
@@ -112,11 +66,11 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    GeothermalGeneratorBlockEntity.this.energy = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.lavaBuffer = value;
+                    GeothermalGeneratorBlockEntity.this.lavaBuffer = value;
                 }
             }
         }
@@ -174,13 +128,13 @@ IEnergyStorage {
         }
         ItemStack inputSlot = this.inventory.getItem(0);
         ItemStack outputSlot = this.inventory.getItem(1);
-        if (inputSlot.is((Object)Items.LAVA_BUCKET) && this.lavaBuffer <= 3000) {
+        if (inputSlot.is(Items.LAVA_BUCKET) && this.lavaBuffer <= 3000) {
             if (outputSlot.isEmpty()) {
                 this.inventory.setItem(1, new ItemStack((ItemLike)Items.BUCKET, 1));
                 inputSlot.shrink(1);
                 this.lavaBuffer += 1000;
                 this.setChanged();
-            } else if (outputSlot.is((Object)Items.BUCKET) && outputSlot.getCount() < outputSlot.getMaxStackSize()) {
+            } else if (outputSlot.is(Items.BUCKET) && outputSlot.getCount() < outputSlot.getMaxStackSize()) {
                 outputSlot.grow(1);
                 inputSlot.shrink(1);
                 this.lavaBuffer += 1000;
@@ -207,37 +161,35 @@ IEnergyStorage {
             }
         }
         boolean bl = isWorking = this.lavaBuffer > 0;
-        if (state.hasProperty((Property)BlockStateProperties.LIT) && (Boolean)state.getValue((Property)BlockStateProperties.LIT) != isWorking) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)BlockStateProperties.LIT, (Comparable)Boolean.valueOf(isWorking)), 3);
+        if (state.hasProperty(BlockStateProperties.LIT) && (Boolean)state.getValue(BlockStateProperties.LIT) != isWorking) {
+            level.setBlock(pos, (BlockState)state.setValue(BlockStateProperties.LIT, isWorking), 3);
         }
     }
 
     private void pushEnergy(Level level, BlockPos pos) {
         int pushAmount = Math.min(this.energy, 64);
-        for (Direction dir : Direction.values()) {
-            int received;
-            int toPush;
-            BlockEntity target;
-            if (dir == Direction.UP || !((target = level.getBlockEntity(pos.relative(dir))) instanceof IEnergyStorage)) continue;
-            IEnergyStorage targetStorage = (IEnergyStorage)target;
-            if (target instanceof GeothermalGeneratorBlockEntity || (toPush = Math.min(pushAmount, received = targetStorage.getMaxEnergy() - targetStorage.getEnergy())) <= 0) continue;
-            targetStorage.setEnergy(targetStorage.getEnergy() + toPush);
-            this.energy -= toPush;
-            this.setChanged();
-            if ((pushAmount -= toPush) <= 0) break;
+        for (Direction dir : DIRECTIONS) {
+            if (dir == Direction.UP || pushAmount <= 0) continue;
+            BlockEntity target = level.getBlockEntity(pos.relative(dir));
+            if (!(target instanceof IEnergyStorage targetStorage) || target instanceof GeothermalGeneratorBlockEntity) continue;
+            int received = targetStorage.receiveEnergy(pushAmount, false);
+            if (received > 0) {
+                this.energy -= received;
+                pushAmount -= received;
+                this.setChanged();
+            }
         }
     }
 
     private void scanAndAbsorbLava(Level level, BlockPos pos) {
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : DIRECTIONS) {
             BlockPos adjacent;
             BlockState adjState;
-            if (dir == Direction.UP || !(adjState = level.getBlockState(adjacent = pos.relative(dir))).is((Object)Blocks.LAVA) || !level.getFluidState(adjacent).isSource()) continue;
+            if (dir == Direction.UP || !(adjState = level.getBlockState(adjacent = pos.relative(dir))).is(Blocks.LAVA) || !level.getFluidState(adjacent).isSource()) continue;
             level.setBlockAndUpdate(adjacent, Blocks.OBSIDIAN.defaultBlockState());
             level.playSound(null, adjacent, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 1.5f);
-            if (level instanceof ServerLevel) {
-                ServerLevel serverLevel = (ServerLevel)level;
-                serverLevel.sendParticles((ParticleOptions)ParticleTypes.LARGE_SMOKE, (double)adjacent.getX() + 0.5, (double)adjacent.getY() + 1.0, (double)adjacent.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.0);
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, (double)adjacent.getX() + 0.5, (double)adjacent.getY() + 1.0, (double)adjacent.getZ() + 0.5, 4, 0.2, 0.2, 0.2, 0.0);
             }
             this.lavaBuffer = Math.min(4000, this.lavaBuffer + 1000);
             this.setChanged();
@@ -279,7 +231,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

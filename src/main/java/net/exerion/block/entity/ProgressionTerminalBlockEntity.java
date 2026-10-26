@@ -1,34 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.server.level.ServerPlayer
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import java.util.UUID;
 import net.exerion.block.ModBlocks;
 import net.exerion.block.entity.ModBlockEntityTypes;
@@ -64,18 +35,11 @@ import org.jetbrains.annotations.Nullable;
 public class ProgressionTerminalBlockEntity
 extends BlockEntity
 implements MenuProvider {
-    private final SimpleContainer inventory = new SimpleContainer(this, 5){
-        final /* synthetic */ ProgressionTerminalBlockEntity this$0;
-        {
-            ProgressionTerminalBlockEntity progressionTerminalBlockEntity = this$0;
-            Objects.requireNonNull(progressionTerminalBlockEntity);
-            this.this$0 = progressionTerminalBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(5) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            ProgressionTerminalBlockEntity.this.setChanged();
         }
     };
     private UUID lastPlayerUUID = null;
@@ -97,108 +61,51 @@ implements MenuProvider {
     }
 
     public boolean tryAdvanceEra(ServerPlayer player) {
-        TechnologyEra currentEra = PlayerEraManager.getPlayerEra((Player)player);
+        TechnologyEra currentEra = PlayerEraManager.getPlayerEra(player);
         ServerLevel level = player.level();
-        if (currentEra == TechnologyEra.STONE) {
-            if (this.hasItems(new ItemStack((ItemLike)Items.RAW_COPPER, 64), new ItemStack((ItemLike)Items.COAL, 64), new ItemStack((ItemLike)Items.RAW_IRON, 64))) {
-                this.consumeItems(new ItemStack((ItemLike)Items.RAW_COPPER, 64), new ItemStack((ItemLike)Items.COAL, 64), new ItemStack((ItemLike)Items.RAW_IRON, 64));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.COPPER);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.COPPER);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.0f);
-                return true;
+        return switch (currentEra) {
+            case STONE -> this.tryUnlockEra(player, level, TechnologyEra.COPPER, 1.0f,
+                "§c[Exerion] Not enough resources! Need: 64x Raw Copper + 64x Coal + 64x Raw Iron",
+                new ItemStack(Items.RAW_COPPER, 64), new ItemStack(Items.COAL, 64), new ItemStack(Items.RAW_IRON, 64));
+            case COPPER -> this.tryUnlockEra(player, level, TechnologyEra.IRON, 1.1f,
+                "§c[Exerion] Not enough resources! Need: 64x Copper Gear + 32x Iron Block + 16x Redstone Dust",
+                new ItemStack(ModItems.COPPER_GEAR, 64), new ItemStack(Items.IRON_BLOCK, 32), new ItemStack(Items.REDSTONE, 16));
+            case IRON -> this.tryUnlockEra(player, level, TechnologyEra.MECHANICAL, 1.1f,
+                "§c[Exerion] Not enough resources! Need: 64x Iron Gear + 32x Shaft + 16x Water Wheel",
+                new ItemStack(ModItems.IRON_GEAR, 64), new ItemStack(ModBlocks.SHAFT, 32), new ItemStack(ModBlocks.WATER_WHEEL, 16));
+            case MECHANICAL -> this.tryUnlockEra(player, level, TechnologyEra.STEEL, 1.2f,
+                "§c[Exerion] Not enough resources! Need: 64x Steel Ingot + 64x Steam Crystal + 16x Coal Boiler",
+                new ItemStack(ModItems.STEEL_INGOT, 64), new ItemStack(ModItems.STEAM_CRYSTAL, 64), new ItemStack(ModBlocks.COAL_BOILER, 16));
+            case STEEL -> this.tryUnlockEra(player, level, TechnologyEra.INDUSTRIAL, 1.2f,
+                "§c[Exerion] Not enough resources! Need: 64x Circuit Board + 64x Exerion Plate + 64x Steel Cable",
+                new ItemStack(ModItems.CIRCUIT_BOARD, 64), new ItemStack(ModItems.EXERION_PLATE, 64), new ItemStack(ModBlocks.STEEL_CABLE, 64));
+            case INDUSTRIAL -> this.tryUnlockEra(player, level, TechnologyEra.DIGITAL, 1.3f,
+                "§c[Exerion] Not enough resources! Need: 64x Logic Chip + 64x Exerion Gear + 32x Electric Generator",
+                new ItemStack(ModItems.LOGIC_CHIP, 64), new ItemStack(ModItems.EXERION_GEAR, 64), new ItemStack(ModBlocks.ELECTRIC_GENERATOR, 32));
+            case DIGITAL -> this.tryUnlockEra(player, level, TechnologyEra.ADVANCED, 1.4f,
+                "§c[Exerion] Not enough resources! Need: 64x Solar Panel + 64x Logic Chip",
+                new ItemStack(ModBlocks.EXERION_SOLAR_PANEL, 64), new ItemStack(ModItems.LOGIC_CHIP, 64));
+            case ADVANCED -> this.tryUnlockEra(player, level, TechnologyEra.QUANTUM, 1.5f,
+                "§c[Exerion] Not enough resources! Need: 64x Exerion Core + 1x Plasma Sword",
+                new ItemStack(ModItems.EXERION_CORE, 64), new ItemStack(ModItems.PLASMA_SWORD, 1));
+            case QUANTUM -> this.tryUnlockEra(player, level, TechnologyEra.COSMIC, 1.6f,
+                "§c[Exerion] Not enough resources! Need: 64x Exerion Core",
+                new ItemStack(ModItems.EXERION_CORE, 64));
+            default -> {
+                player.sendSystemMessage(Component.literal("§6[Exerion] §fYou are already at the maximum era: §dCosmic Age§f!"));
+                yield false;
             }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Raw Copper + 64x Coal + 64x Raw Iron"));
-            return false;
+        };
+    }
+
+    private boolean tryUnlockEra(ServerPlayer player, ServerLevel level, TechnologyEra nextEra, float pitch, String missingMsg, ItemStack... requirements) {
+        if (this.hasItems(requirements)) {
+            this.consumeItems(requirements);
+            PlayerEraManager.setPlayerEra(player, nextEra);
+            level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, pitch);
+            return true;
         }
-        if (currentEra == TechnologyEra.COPPER) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.COPPER_GEAR, 64), new ItemStack((ItemLike)Items.IRON_BLOCK, 32), new ItemStack((ItemLike)Items.REDSTONE, 16))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.COPPER_GEAR, 64), new ItemStack((ItemLike)Items.IRON_BLOCK, 32), new ItemStack((ItemLike)Items.REDSTONE, 16));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.IRON);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.IRON);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.1f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Copper Gear + 32x Iron Block + 16x Redstone Dust"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.IRON) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.IRON_GEAR, 64), new ItemStack((ItemLike)ModBlocks.SHAFT.asItem(), 32), new ItemStack((ItemLike)ModBlocks.WATER_WHEEL.asItem(), 16))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.IRON_GEAR, 64), new ItemStack((ItemLike)ModBlocks.SHAFT.asItem(), 32), new ItemStack((ItemLike)ModBlocks.WATER_WHEEL.asItem(), 16));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.MECHANICAL);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.MECHANICAL);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.1f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Iron Gear + 32x Shaft + 16x Water Wheel"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.MECHANICAL) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.STEEL_INGOT, 64), new ItemStack((ItemLike)ModItems.STEAM_CRYSTAL, 64), new ItemStack((ItemLike)ModBlocks.COAL_BOILER.asItem(), 16))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.STEEL_INGOT, 64), new ItemStack((ItemLike)ModItems.STEAM_CRYSTAL, 64), new ItemStack((ItemLike)ModBlocks.COAL_BOILER.asItem(), 16));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.STEEL);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.STEEL);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.2f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Steel Ingot + 64x Steam Crystal + 16x Coal Boiler"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.STEEL) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD, 64), new ItemStack((ItemLike)ModItems.EXERION_PLATE, 64), new ItemStack((ItemLike)ModBlocks.STEEL_CABLE.asItem(), 64))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.CIRCUIT_BOARD, 64), new ItemStack((ItemLike)ModItems.EXERION_PLATE, 64), new ItemStack((ItemLike)ModBlocks.STEEL_CABLE.asItem(), 64));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.INDUSTRIAL);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.INDUSTRIAL);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.2f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Circuit Board + 64x Exerion Plate + 64x Steel Cable"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.INDUSTRIAL) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.LOGIC_CHIP, 64), new ItemStack((ItemLike)ModItems.EXERION_GEAR, 64), new ItemStack((ItemLike)ModBlocks.ELECTRIC_GENERATOR.asItem(), 32))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.LOGIC_CHIP, 64), new ItemStack((ItemLike)ModItems.EXERION_GEAR, 64), new ItemStack((ItemLike)ModBlocks.ELECTRIC_GENERATOR.asItem(), 32));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.DIGITAL);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.DIGITAL);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.3f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Logic Chip + 64x Exerion Gear + 32x Electric Generator"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.DIGITAL) {
-            if (this.hasItems(new ItemStack((ItemLike)ModBlocks.EXERION_SOLAR_PANEL.asItem(), 64), new ItemStack((ItemLike)ModItems.LOGIC_CHIP, 64))) {
-                this.consumeItems(new ItemStack((ItemLike)ModBlocks.EXERION_SOLAR_PANEL.asItem(), 64), new ItemStack((ItemLike)ModItems.LOGIC_CHIP, 64));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.ADVANCED);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.ADVANCED);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.4f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Solar Panel + 64x Logic Chip"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.ADVANCED) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.EXERION_CORE, 64), new ItemStack((ItemLike)ModItems.PLASMA_SWORD, 1))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.EXERION_CORE, 64), new ItemStack((ItemLike)ModItems.PLASMA_SWORD, 1));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.QUANTUM);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.QUANTUM);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.5f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Exerion Core + 1x Plasma Sword"));
-            return false;
-        }
-        if (currentEra == TechnologyEra.QUANTUM) {
-            if (this.hasItems(new ItemStack((ItemLike)ModItems.EXERION_CORE, 64))) {
-                this.consumeItems(new ItemStack((ItemLike)ModItems.EXERION_CORE, 64));
-                PlayerEraManager.setPlayerEra(player, TechnologyEra.COSMIC);
-                ExerionNetwork.syncEraToClient(player, TechnologyEra.COSMIC);
-                level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0f, 1.6f);
-                return true;
-            }
-            player.sendSystemMessage((Component)Component.literal((String)"\u00a7c[Exerion] Not enough resources! Need: 64x Exerion Core"));
-            return false;
-        }
-        player.sendSystemMessage((Component)Component.literal((String)"\u00a76[Exerion] \u00a7fYou are already at the maximum era: \u00a7dCosmic Age\u00a7f!"));
+        player.sendSystemMessage(Component.literal(missingMsg));
         return false;
     }
 
@@ -207,7 +114,7 @@ implements MenuProvider {
             int totalFound = 0;
             for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
                 ItemStack slot = this.inventory.getItem(i);
-                if (!slot.is((Object)req.getItem())) continue;
+                if (!slot.is(req.getItem())) continue;
                 totalFound += slot.getCount();
             }
             if (totalFound >= req.getCount()) continue;
@@ -221,7 +128,7 @@ implements MenuProvider {
             int remaining = req.getCount();
             for (int i = 0; i < this.inventory.getContainerSize() && remaining > 0; ++i) {
                 ItemStack slot = this.inventory.getItem(i);
-                if (!slot.is((Object)req.getItem())) continue;
+                if (!slot.is(req.getItem())) continue;
                 int take = Math.min(remaining, slot.getCount());
                 slot.shrink(take);
                 remaining -= take;
@@ -266,7 +173,7 @@ implements MenuProvider {
         ValueOutput invOutput = output.child("Inventory");
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             if (this.inventory.getItem(i).isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)this.inventory.getItem(i));
+            invOutput.store("Slot" + i, ItemStack.CODEC, this.inventory.getItem(i));
         }
     }
 

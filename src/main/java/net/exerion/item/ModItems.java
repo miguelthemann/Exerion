@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.Registry
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.Identifier
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.item.equipment.ArmorType
- */
 package net.exerion.item;
 
 import java.util.function.Function;
@@ -65,12 +52,12 @@ public class ModItems {
 
     private static Item registerItem(String name, Item.Properties properties) {
         ResourceKey key = ResourceKey.create((ResourceKey)Registries.ITEM, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)name));
-        return (Item)Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)key, (Object)new Item(properties.setId(key)));
+        return (Item)Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)key, new Item(properties.setId(key)));
     }
 
     private static <T extends Item> T registerCustomItem(String name, Function<Item.Properties, T> factory, Item.Properties properties) {
         ResourceKey key = ResourceKey.create((ResourceKey)Registries.ITEM, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)name));
-        return (T)((Item)Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)key, (Object)((Item)factory.apply(properties.setId(key)))));
+        return (T)((Item)Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)key, ((Item)factory.apply(properties.setId(key)))));
     }
 
     public static void registerModItems() {

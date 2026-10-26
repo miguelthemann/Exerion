@@ -1,19 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.Registry
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.Identifier
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.item.BlockItem
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.SoundType
- *  net.minecraft.world.level.block.state.BlockBehaviour$Properties
- *  net.minecraft.world.level.material.MapColor
- */
 package net.exerion.block;
 
 import java.util.function.Function;
@@ -94,8 +78,8 @@ public class ModBlocks {
         ResourceKey blockKey = ResourceKey.create((ResourceKey)Registries.BLOCK, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)name));
         Block block = factory.apply(properties.setId(blockKey));
         ResourceKey itemKey = ResourceKey.create((ResourceKey)Registries.ITEM, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)name));
-        Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)itemKey, (Object)new BlockItem(block, new Item.Properties().setId(itemKey)));
-        return (Block)Registry.register((Registry)BuiltInRegistries.BLOCK, (ResourceKey)blockKey, (Object)block);
+        Registry.register((Registry)BuiltInRegistries.ITEM, (ResourceKey)itemKey, new BlockItem(block, new Item.Properties().setId(itemKey)));
+        return (Block)Registry.register((Registry)BuiltInRegistries.BLOCK, (ResourceKey)blockKey, block);
     }
 
     public static void registerModBlocks() {

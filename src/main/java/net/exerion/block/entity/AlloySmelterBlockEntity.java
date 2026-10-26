@@ -1,33 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.BlockStateProperties
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.item.ModItems;
@@ -59,38 +31,26 @@ public class AlloySmelterBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 3){
-        final /* synthetic */ AlloySmelterBlockEntity this$0;
-        {
-            AlloySmelterBlockEntity alloySmelterBlockEntity = this$0;
-            Objects.requireNonNull(alloySmelterBlockEntity);
-            this.this$0 = alloySmelterBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(3) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            AlloySmelterBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
     private final int maxEnergy = 4000;
     private int progress = 0;
     private final int maxProgress = 200;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ AlloySmelterBlockEntity this$0;
-        {
-            AlloySmelterBlockEntity alloySmelterBlockEntity = this$0;
-            Objects.requireNonNull(alloySmelterBlockEntity);
-            this.this$0 = alloySmelterBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
-                case 2 -> this.this$0.progress;
-                case 3 -> this.this$0.maxProgress;
+                case 0 -> AlloySmelterBlockEntity.this.energy;
+                case 1 -> AlloySmelterBlockEntity.this.maxEnergy;
+                case 2 -> AlloySmelterBlockEntity.this.progress;
+                case 3 -> AlloySmelterBlockEntity.this.maxProgress;
                 default -> 0;
             };
         }
@@ -98,11 +58,11 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    AlloySmelterBlockEntity.this.energy = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.progress = value;
+                    AlloySmelterBlockEntity.this.progress = value;
                 }
             }
         }
@@ -168,8 +128,8 @@ IEnergyStorage {
             this.setChanged();
         }
         boolean bl = isWorking = this.progress > 0;
-        if (state.hasProperty((Property)BlockStateProperties.LIT) && (Boolean)state.getValue((Property)BlockStateProperties.LIT) != isWorking) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)BlockStateProperties.LIT, (Comparable)Boolean.valueOf(isWorking)), 3);
+        if (state.hasProperty(BlockStateProperties.LIT) && (Boolean)state.getValue(BlockStateProperties.LIT) != isWorking) {
+            level.setBlock(pos, (BlockState)state.setValue(BlockStateProperties.LIT, isWorking), 3);
         }
     }
 
@@ -184,11 +144,11 @@ IEnergyStorage {
         if (output.isEmpty()) {
             return true;
         }
-        return output.is((Object)recipeResult.getItem()) && output.getCount() + recipeResult.getCount() <= output.getMaxStackSize();
+        return output.is(recipeResult.getItem()) && output.getCount() + recipeResult.getCount() <= output.getMaxStackSize();
     }
 
     private boolean matchRecipe(ItemStack inputA, ItemStack inputB, ItemStack itemA, ItemStack itemB) {
-        return inputA.is((Object)itemA.getItem()) && inputB.is((Object)itemB.getItem()) || inputA.is((Object)itemB.getItem()) && inputB.is((Object)itemA.getItem());
+        return inputA.is(itemA.getItem()) && inputB.is(itemB.getItem()) || inputA.is(itemB.getItem()) && inputB.is(itemA.getItem());
     }
 
     private ItemStack getRecipeResult(ItemStack inputA, ItemStack inputB) {
@@ -256,7 +216,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

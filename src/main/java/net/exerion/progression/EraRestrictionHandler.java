@@ -1,22 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
- *  net.fabricmc.fabric.api.event.player.UseBlockCallback
- *  net.fabricmc.fabric.api.event.player.UseItemCallback
- *  net.minecraft.ChatFormatting
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.chat.MutableComponent
- *  net.minecraft.world.InteractionHand
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.block.state.BlockState
- */
 package net.exerion.progression;
 
-import net.exerion.progression.EraProgressionRegistry;
-import net.exerion.progression.TechnologyEra;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -34,47 +17,49 @@ public class EraRestrictionHandler {
             if (player.isSpectator()) {
                 return true;
             }
-            BlockState blockState = world.getBlockState(pos);
-            if (!EraProgressionRegistry.hasUnlockedRequiredEra(player, blockState.getBlock())) {
+            TechnologyEra required = EraProgressionRegistry.getRequiredEra(state.getBlock());
+            if (!PlayerEraManager.getPlayerEra(player).isAtLeast(required)) {
                 if (!world.isClientSide()) {
-                    TechnologyEra required = EraProgressionRegistry.getRequiredEra(blockState.getBlock());
-                    MutableComponent message = Component.translatable((String)"message.exerion.era_locked.block_break", (Object[])new Object[]{required.getDisplayNameComponent()}).withStyle(ChatFormatting.RED);
-                    player.sendSystemMessage((Component)message);
+                    MutableComponent message = Component.translatable("message.exerion.era_locked.block_break", required.getDisplayNameComponent()).withStyle(ChatFormatting.RED);
+                    player.sendSystemMessage(message);
                 }
                 return false;
             }
             return true;
         });
+
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if (player.isSpectator()) {
                 return InteractionResult.PASS;
             }
             BlockState state = world.getBlockState(hitResult.getBlockPos());
-            if (!EraProgressionRegistry.hasUnlockedRequiredEra(player, state.getBlock())) {
+            TechnologyEra required = EraProgressionRegistry.getRequiredEra(state.getBlock());
+            if (!PlayerEraManager.getPlayerEra(player).isAtLeast(required)) {
                 if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-                    TechnologyEra required = EraProgressionRegistry.getRequiredEra(state.getBlock());
-                    MutableComponent message = Component.translatable((String)"message.exerion.era_locked.block_use", (Object[])new Object[]{required.getDisplayNameComponent()}).withStyle(ChatFormatting.RED);
-                    player.sendSystemMessage((Component)message);
+                    MutableComponent message = Component.translatable("message.exerion.era_locked.block_use", required.getDisplayNameComponent()).withStyle(ChatFormatting.RED);
+                    player.sendSystemMessage(message);
                 }
                 return InteractionResult.FAIL;
             }
             return InteractionResult.PASS;
         });
+
         UseItemCallback.EVENT.register((player, world, hand) -> {
             if (player.isSpectator()) {
                 return InteractionResult.PASS;
             }
             ItemStack stack = player.getItemInHand(hand);
-            if (!stack.isEmpty() && !EraProgressionRegistry.hasUnlockedRequiredEra(player, stack.getItem())) {
-                if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND) {
-                    TechnologyEra required = EraProgressionRegistry.getRequiredEra(stack.getItem());
-                    MutableComponent message = Component.translatable((String)"message.exerion.era_locked.item_use", (Object[])new Object[]{required.getDisplayNameComponent()}).withStyle(ChatFormatting.RED);
-                    player.sendSystemMessage((Component)message);
+            if (!stack.isEmpty()) {
+                TechnologyEra required = EraProgressionRegistry.getRequiredEra(stack.getItem());
+                if (!PlayerEraManager.getPlayerEra(player).isAtLeast(required)) {
+                    if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND) {
+                        MutableComponent message = Component.translatable("message.exerion.era_locked.item_use", required.getDisplayNameComponent()).withStyle(ChatFormatting.RED);
+                        player.sendSystemMessage(message);
+                    }
+                    return InteractionResult.FAIL;
                 }
-                return InteractionResult.FAIL;
             }
             return InteractionResult.PASS;
         });
     }
 }
-

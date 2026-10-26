@@ -1,21 +1,9 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.resources.Identifier
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.level.block.Block
- */
 package net.exerion.progression;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.exerion.block.ModBlocks;
 import net.exerion.item.ModItems;
-import net.exerion.progression.PlayerEraManager;
-import net.exerion.progression.TechnologyEra;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -23,31 +11,37 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class EraProgressionRegistry {
-    private static final Map<Identifier, TechnologyEra> ITEM_ERAS = new HashMap<Identifier, TechnologyEra>();
-    private static final Map<Identifier, TechnologyEra> BLOCK_ERAS = new HashMap<Identifier, TechnologyEra>();
+    private static final Map<Identifier, TechnologyEra> ITEM_ERAS = new ConcurrentHashMap<>();
+    private static final Map<Identifier, TechnologyEra> BLOCK_ERAS = new ConcurrentHashMap<>();
 
     public static void registerItemEra(Item item, TechnologyEra era) {
-        ITEM_ERAS.put(BuiltInRegistries.ITEM.getKey((Object)item), era);
+        ITEM_ERAS.put(BuiltInRegistries.ITEM.getKey(item), era);
     }
 
     public static void registerBlockEra(Block block, TechnologyEra era) {
-        BLOCK_ERAS.put(BuiltInRegistries.BLOCK.getKey((Object)block), era);
+        BLOCK_ERAS.put(BuiltInRegistries.BLOCK.getKey(block), era);
     }
 
     public static TechnologyEra getRequiredEra(Item item) {
-        Identifier id = BuiltInRegistries.ITEM.getKey((Object)item);
-        if (ITEM_ERAS.containsKey(id)) {
-            return ITEM_ERAS.get(id);
+        Identifier id = BuiltInRegistries.ITEM.getKey(item);
+        TechnologyEra era = ITEM_ERAS.get(id);
+        if (era != null) {
+            return era;
         }
-        return EraProgressionRegistry.getDynamicEra(id);
+        era = getDynamicEra(id);
+        ITEM_ERAS.put(id, era);
+        return era;
     }
 
     public static TechnologyEra getRequiredEra(Block block) {
-        Identifier id = BuiltInRegistries.BLOCK.getKey((Object)block);
-        if (BLOCK_ERAS.containsKey(id)) {
-            return BLOCK_ERAS.get(id);
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+        TechnologyEra era = BLOCK_ERAS.get(id);
+        if (era != null) {
+            return era;
         }
-        return EraProgressionRegistry.getDynamicEra(id);
+        era = getDynamicEra(id);
+        BLOCK_ERAS.put(id, era);
+        return era;
     }
 
     private static TechnologyEra getDynamicEra(Identifier id) {

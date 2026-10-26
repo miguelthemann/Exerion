@@ -1,36 +1,12 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.SteamTurbineBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.item.ModItems;
 import net.exerion.menu.SteamTurbineMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -54,34 +30,23 @@ public class SteamTurbineBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 2){
-        final /* synthetic */ SteamTurbineBlockEntity this$0;
-        {
-            SteamTurbineBlockEntity steamTurbineBlockEntity = this$0;
-            Objects.requireNonNull(steamTurbineBlockEntity);
-            this.this$0 = steamTurbineBlockEntity;
-            super(arg0);
-        }
-
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private final SimpleContainer inventory = new SimpleContainer(2) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            SteamTurbineBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
     private final int maxEnergy = 1000;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ SteamTurbineBlockEntity this$0;
-        {
-            SteamTurbineBlockEntity steamTurbineBlockEntity = this$0;
-            Objects.requireNonNull(steamTurbineBlockEntity);
-            this.this$0 = steamTurbineBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
+                case 0 -> SteamTurbineBlockEntity.this.energy;
+                case 1 -> SteamTurbineBlockEntity.this.maxEnergy;
                 default -> 0;
             };
         }
@@ -89,7 +54,7 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    SteamTurbineBlockEntity.this.energy = value;
                 }
             }
         }
@@ -128,26 +93,44 @@ IEnergyStorage {
         if (level.isClientSide()) {
             return;
         }
-        boolean wasTurning = (Boolean)state.getValue((Property)SteamTurbineBlock.TURNING);
+        boolean wasTurning = (Boolean)state.getValue(SteamTurbineBlock.TURNING);
         boolean isTurning = false;
         ItemStack crystalSlot = this.inventory.getItem(0);
-        if (this.energy <= 750 && !crystalSlot.isEmpty() && crystalSlot.is((Object)ModItems.STEAM_CRYSTAL)) {
+        if (this.energy <= 750 && !crystalSlot.isEmpty() && crystalSlot.is(ModItems.STEAM_CRYSTAL)) {
             crystalSlot.shrink(1);
             this.energy += 250;
             this.setChanged();
         }
         ItemStack chargeSlot = this.inventory.getItem(1);
-        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is((Object)ModItems.ERA_SCANNER) || chargeSlot.is((Object)ModItems.STEAM_BOOTS) || chargeSlot.is((Object)ModItems.ELECTRIC_PLATE) || chargeSlot.is((Object)ModItems.LOGIC_HELMET) || chargeSlot.is((Object)ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is((Object)ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
+        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is(ModItems.ERA_SCANNER) || chargeSlot.is(ModItems.STEAM_BOOTS) || chargeSlot.is(ModItems.ELECTRIC_PLATE) || chargeSlot.is(ModItems.LOGIC_HELMET) || chargeSlot.is(ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is(ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
             chargeSlot.setDamageValue(damage - 1);
             --this.energy;
             isTurning = true;
             this.setChanged();
         }
-        if (this.energy > 0 && isTurning) {
+        if (this.energy > 0) {
+            this.pushEnergy(level, pos);
             isTurning = true;
         }
         if (wasTurning != isTurning) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)SteamTurbineBlock.TURNING, (Comparable)Boolean.valueOf(isTurning)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(SteamTurbineBlock.TURNING, isTurning), 3);
+        }
+    }
+
+    private void pushEnergy(Level level, BlockPos pos) {
+        int pushAmount = Math.min(this.energy, 32);
+        for (Direction dir : DIRECTIONS) {
+            if (pushAmount <= 0) break;
+            BlockEntity target = level.getBlockEntity(pos.relative(dir));
+            if (!(target instanceof IEnergyStorage targetStorage) || target instanceof SteamTurbineBlockEntity) {
+                continue;
+            }
+            int received = targetStorage.receiveEnergy(pushAmount, false);
+            if (received > 0) {
+                this.energy -= received;
+                pushAmount -= received;
+                this.setChanged();
+            }
         }
     }
 
@@ -184,7 +167,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

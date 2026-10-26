@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab
- *  net.minecraft.core.Registry
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.network.chat.Component
- *  net.minecraft.resources.Identifier
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.item.CreativeModeTab
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.ItemLike
- */
 package net.exerion.item;
 
 import net.exerion.block.ModBlocks;
@@ -38,14 +23,14 @@ public class ModCreativeModeTabs {
         output.accept((ItemLike)ModItems.PLASMA_SWORD);
         output.accept((ItemLike)ModItems.STEAM_BOOTS);
         output.accept((ItemLike)ModItems.LOGIC_HELMET);
-        output.accept((ItemLike)ModBlocks.EXERION_ORE);
-        output.accept((ItemLike)ModBlocks.DEEPSLATE_EXERION_ORE);
+        output.accept(ModBlocks.EXERION_ORE);
+        output.accept(ModBlocks.DEEPSLATE_EXERION_ORE);
         output.accept((ItemLike)ModItems.RAW_EXERION);
-        output.accept((ItemLike)ModBlocks.RAW_EXERION_BLOCK);
+        output.accept(ModBlocks.RAW_EXERION_BLOCK);
         output.accept((ItemLike)ModItems.EXERION_INGOT);
-        output.accept((ItemLike)ModBlocks.EXERION_BLOCK);
+        output.accept(ModBlocks.EXERION_BLOCK);
         output.accept((ItemLike)ModItems.STEEL_INGOT);
-        output.accept((ItemLike)ModBlocks.STEEL_BLOCK);
+        output.accept(ModBlocks.STEEL_BLOCK);
         output.accept((ItemLike)ModItems.STEAM_CRYSTAL);
         output.accept((ItemLike)ModItems.EXERION_NUGGET);
         output.accept((ItemLike)ModItems.COAL_DUST);
@@ -65,40 +50,40 @@ public class ModCreativeModeTabs {
         output.accept((ItemLike)ModItems.GEAR_BLUEPRINT);
         output.accept((ItemLike)ModItems.SPEED_UPGRADE);
         output.accept((ItemLike)ModItems.EFFICIENCY_UPGRADE);
-        output.accept((ItemLike)ModBlocks.EXERION_CASING);
-        output.accept((ItemLike)ModBlocks.STEEL_CASING);
-        output.accept((ItemLike)ModBlocks.EXERION_FRAME);
-        output.accept((ItemLike)ModBlocks.COPPER_CABLE);
-        output.accept((ItemLike)ModBlocks.STEEL_CABLE);
-        output.accept((ItemLike)ModBlocks.EXERION_CABLE);
-        output.accept((ItemLike)ModBlocks.SHAFT);
-        output.accept((ItemLike)ModBlocks.HAND_CRANK);
-        output.accept((ItemLike)ModBlocks.WATER_WHEEL);
-        output.accept((ItemLike)ModBlocks.MECHANICAL_CHUTE);
-        output.accept((ItemLike)ModBlocks.COAL_BOILER);
-        output.accept((ItemLike)ModBlocks.GEAR_PRESS);
-        output.accept((ItemLike)ModBlocks.CRUSHER);
-        output.accept((ItemLike)ModBlocks.ELECTRIC_GENERATOR);
-        output.accept((ItemLike)ModBlocks.STEAM_TURBINE);
-        output.accept((ItemLike)ModBlocks.GEOTHERMAL_GENERATOR);
-        output.accept((ItemLike)ModBlocks.BATBOX);
-        output.accept((ItemLike)ModBlocks.ALLOY_SMELTER);
-        output.accept((ItemLike)ModBlocks.PUMP);
-        output.accept((ItemLike)ModBlocks.ELECTRIC_CRUSHER);
-        output.accept((ItemLike)ModBlocks.ELECTRIC_FURNACE);
-        output.accept((ItemLike)ModBlocks.COMPRESSOR);
-        output.accept((ItemLike)ModBlocks.COPPER_SOLAR_PANEL);
-        output.accept((ItemLike)ModBlocks.STEEL_SOLAR_PANEL);
-        output.accept((ItemLike)ModBlocks.EXERION_SOLAR_PANEL);
-        output.accept((ItemLike)ModBlocks.MINING_LASER);
-        output.accept((ItemLike)ModBlocks.FREQUENCY_ENDER_TANK);
-        output.accept((ItemLike)ModBlocks.FREQUENCY_ENDER_CHEST);
-        output.accept((ItemLike)ModBlocks.PROGRESSION_TERMINAL);
-        output.accept((ItemLike)ModBlocks.DIGITAL_STORAGE_TERMINAL);
+        output.accept(ModBlocks.EXERION_CASING);
+        output.accept(ModBlocks.STEEL_CASING);
+        output.accept(ModBlocks.EXERION_FRAME);
+        output.accept(ModBlocks.COPPER_CABLE);
+        output.accept(ModBlocks.STEEL_CABLE);
+        output.accept(ModBlocks.EXERION_CABLE);
+        output.accept(ModBlocks.SHAFT);
+        output.accept(ModBlocks.HAND_CRANK);
+        output.accept(ModBlocks.WATER_WHEEL);
+        output.accept(ModBlocks.MECHANICAL_CHUTE);
+        output.accept(ModBlocks.COAL_BOILER);
+        output.accept(ModBlocks.GEAR_PRESS);
+        output.accept(ModBlocks.CRUSHER);
+        output.accept(ModBlocks.ELECTRIC_GENERATOR);
+        output.accept(ModBlocks.STEAM_TURBINE);
+        output.accept(ModBlocks.GEOTHERMAL_GENERATOR);
+        output.accept(ModBlocks.BATBOX);
+        output.accept(ModBlocks.ALLOY_SMELTER);
+        output.accept(ModBlocks.PUMP);
+        output.accept(ModBlocks.ELECTRIC_CRUSHER);
+        output.accept(ModBlocks.ELECTRIC_FURNACE);
+        output.accept(ModBlocks.COMPRESSOR);
+        output.accept(ModBlocks.COPPER_SOLAR_PANEL);
+        output.accept(ModBlocks.STEEL_SOLAR_PANEL);
+        output.accept(ModBlocks.EXERION_SOLAR_PANEL);
+        output.accept(ModBlocks.MINING_LASER);
+        output.accept(ModBlocks.FREQUENCY_ENDER_TANK);
+        output.accept(ModBlocks.FREQUENCY_ENDER_CHEST);
+        output.accept(ModBlocks.PROGRESSION_TERMINAL);
+        output.accept(ModBlocks.DIGITAL_STORAGE_TERMINAL);
     }).build();
 
     public static void registerCreativeModeTabs() {
-        Registry.register((Registry)BuiltInRegistries.CREATIVE_MODE_TAB, EXERION_GROUP_KEY, (Object)EXERION_GROUP);
+        Registry.register((Registry)BuiltInRegistries.CREATIVE_MODE_TAB, EXERION_GROUP_KEY, EXERION_GROUP);
     }
 }
 

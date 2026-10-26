@@ -1,20 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.particles.ParticleOptions
- *  net.minecraft.core.particles.ParticleTypes
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.tags.FluidTags
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- */
 package net.exerion.block.entity;
 
 import net.exerion.block.WaterWheelBlock;
@@ -36,6 +19,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class WaterWheelBlockEntity
 extends BlockEntity
 implements IFMSource {
+    private static final Direction[] DIRECTIONS = Direction.values();
     public static final int FM_OUTPUT = 20;
     private boolean hasWater = false;
     private int checkTimer = 0;
@@ -53,7 +37,7 @@ implements IFMSource {
 
     @Override
     public int getOutputFM() {
-        return this.hasWater ? 20 : 0;
+        return this.hasWater ? FM_OUTPUT : 0;
     }
 
     @Override
@@ -63,16 +47,16 @@ implements IFMSource {
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide()) {
-            if (((Boolean)state.getValue((Property)WaterWheelBlock.SPINNING)).booleanValue()) {
-                this.visualRotationAngle = (float)level.getGameTime() * 4.0f % 360.0f;
+            if (((Boolean)state.getValue(WaterWheelBlock.SPINNING)).booleanValue()) {
+                this.visualRotationAngle = (float)level.getGameTime() * ROTATION_SPEED % 360.0f;
             }
             return;
         }
         ++this.checkTimer;
-        if (this.checkTimer >= 20) {
+        if (this.checkTimer >= CHECK_INTERVAL) {
             this.checkTimer = 0;
             boolean waterFound = false;
-            for (Direction dir : Direction.values()) {
+            for (Direction dir : DIRECTIONS) {
                 BlockPos neighborPos = pos.relative(dir);
                 if (!level.getFluidState(neighborPos).is(FluidTags.WATER)) continue;
                 waterFound = true;
@@ -81,9 +65,9 @@ implements IFMSource {
             if (this.hasWater != waterFound) {
                 this.hasWater = waterFound;
                 this.setChanged();
-                boolean currentSpin = (Boolean)state.getValue((Property)WaterWheelBlock.SPINNING);
+                boolean currentSpin = (Boolean)state.getValue(WaterWheelBlock.SPINNING);
                 if (currentSpin != this.hasWater) {
-                    level.setBlock(pos, (BlockState)state.setValue((Property)WaterWheelBlock.SPINNING, (Comparable)Boolean.valueOf(this.hasWater)), 3);
+                    level.setBlock(pos, (BlockState)state.setValue(WaterWheelBlock.SPINNING, this.hasWater), 3);
                 }
                 if (this.hasWater && level instanceof ServerLevel) {
                     ServerLevel serverLevel = (ServerLevel)level;

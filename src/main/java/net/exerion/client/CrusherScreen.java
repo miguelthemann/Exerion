@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.chat.FormattedText
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.inventory.AbstractContainerMenu
- */
 package net.exerion.client;
 
 import net.exerion.client.GuiHelper;
@@ -23,7 +12,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public class CrusherScreen
 extends AbstractContainerScreen<CrusherMenu> {
     public CrusherScreen(CrusherMenu menu, Inventory playerInventory, Component title) {
-        super((AbstractContainerMenu)menu, playerInventory, title, 176, 166);
+        super(menu, playerInventory, title, 176, 166);
     }
 
     protected void init() {

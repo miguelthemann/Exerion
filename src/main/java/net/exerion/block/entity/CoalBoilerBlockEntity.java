@@ -1,35 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.particles.ParticleOptions
- *  net.minecraft.core.particles.ParticleTypes
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.CoalBoilerBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.item.ModItems;
@@ -62,37 +32,25 @@ import org.jetbrains.annotations.Nullable;
 public class CoalBoilerBlockEntity
 extends BlockEntity
 implements MenuProvider {
-    private final SimpleContainer inventory = new SimpleContainer(this, 3){
-        final /* synthetic */ CoalBoilerBlockEntity this$0;
-        {
-            CoalBoilerBlockEntity coalBoilerBlockEntity = this$0;
-            Objects.requireNonNull(coalBoilerBlockEntity);
-            this.this$0 = coalBoilerBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(3) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            CoalBoilerBlockEntity.this.setChanged();
         }
     };
     private int burnTime = 0;
     private int maxBurnTime = 0;
     private int steamTimer = 0;
     private static final int STEAM_TICKS = 40;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ CoalBoilerBlockEntity this$0;
-        {
-            CoalBoilerBlockEntity coalBoilerBlockEntity = this$0;
-            Objects.requireNonNull(coalBoilerBlockEntity);
-            this.this$0 = coalBoilerBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.burnTime;
-                case 1 -> this.this$0.maxBurnTime;
-                case 2 -> this.this$0.steamTimer;
+                case 0 -> CoalBoilerBlockEntity.this.burnTime;
+                case 1 -> CoalBoilerBlockEntity.this.maxBurnTime;
+                case 2 -> CoalBoilerBlockEntity.this.steamTimer;
                 default -> 0;
             };
         }
@@ -100,15 +58,15 @@ implements MenuProvider {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.burnTime = value;
+                    CoalBoilerBlockEntity.this.burnTime = value;
                     break;
                 }
                 case 1: {
-                    this.this$0.maxBurnTime = value;
+                    CoalBoilerBlockEntity.this.maxBurnTime = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.steamTimer = value;
+                    CoalBoilerBlockEntity.this.steamTimer = value;
                 }
             }
         }
@@ -147,7 +105,7 @@ implements MenuProvider {
         if (this.burnTime == 0) {
             ItemStack fuelSlot = this.inventory.getItem(0);
             ItemStack waterSlot = this.inventory.getItem(1);
-            if (!fuelSlot.isEmpty() && fuelSlot.is((Object)Items.COAL) && !waterSlot.isEmpty() && waterSlot.is((Object)Items.WATER_BUCKET)) {
+            if (!fuelSlot.isEmpty() && (fuelSlot.is(Items.COAL) || fuelSlot.is(Items.CHARCOAL)) && !waterSlot.isEmpty() && waterSlot.is(Items.WATER_BUCKET)) {
                 this.burnTime = 200;
                 this.maxBurnTime = 200;
                 fuelSlot.shrink(1);
@@ -163,7 +121,7 @@ implements MenuProvider {
                 if (outputSlot.isEmpty()) {
                     this.inventory.setItem(2, new ItemStack((ItemLike)ModItems.STEAM_CRYSTAL));
                     this.setChanged();
-                } else if (outputSlot.is((Object)ModItems.STEAM_CRYSTAL) && outputSlot.getCount() < outputSlot.getMaxStackSize()) {
+                } else if (outputSlot.is(ModItems.STEAM_CRYSTAL) && outputSlot.getCount() < outputSlot.getMaxStackSize()) {
                     outputSlot.grow(1);
                     this.setChanged();
                 }
@@ -176,7 +134,7 @@ implements MenuProvider {
             serverLevel.sendParticles((ParticleOptions)ParticleTypes.FLAME, (double)pos.getX() + 0.5, (double)pos.getY() + 1.0, (double)pos.getZ() + 0.5, 1, 0.1, 0.1, 0.1, 0.0);
         }
         if (wasBurning != isBurning) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)CoalBoilerBlock.BURNING, (Comparable)Boolean.valueOf(isBurning)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(CoalBoilerBlock.BURNING, isBurning), 3);
         }
     }
 
@@ -214,7 +172,7 @@ implements MenuProvider {
         ValueOutput invOutput = output.child("Inventory");
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             if (this.inventory.getItem(i).isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)this.inventory.getItem(i));
+            invOutput.store("Slot" + i, ItemStack.CODEC, this.inventory.getItem(i));
         }
     }
 

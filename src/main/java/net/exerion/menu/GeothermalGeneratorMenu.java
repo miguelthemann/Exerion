@@ -1,21 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.Container
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.inventory.SimpleContainerData
- *  net.minecraft.world.inventory.Slot
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- */
 package net.exerion.menu;
 
-import java.util.Objects;
 import net.exerion.block.entity.GeothermalGeneratorBlockEntity;
 import net.exerion.menu.ModMenuTypes;
 import net.minecraft.world.Container;
@@ -42,22 +26,14 @@ extends AbstractContainerMenu {
         this.containerData = data;
         GeothermalGeneratorMenu.checkContainerSize((Container)container, (int)2);
         this.addDataSlots(data);
-        this.addSlot(new Slot(this, container, 0, 44, 35){
-            {
-                Objects.requireNonNull(this$0);
-                super(arg0, arg1, arg2, arg3);
-            }
-
+        this.addSlot(new Slot(container, 0, 44, 35) {
+            @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is((Object)Items.LAVA_BUCKET);
+                return stack.is(Items.LAVA_BUCKET);
             }
         });
-        this.addSlot(new Slot(this, container, 1, 116, 35){
-            {
-                Objects.requireNonNull(this$0);
-                super(arg0, arg1, arg2, arg3);
-            }
-
+        this.addSlot(new Slot(container, 1, 116, 35) {
+            @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
             }
@@ -108,7 +84,7 @@ extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(slotStack, 2, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (slotStack.is((Object)Items.LAVA_BUCKET)) {
+            } else if (slotStack.is(Items.LAVA_BUCKET)) {
                 if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }

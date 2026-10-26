@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
- *  net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
- *  net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
- *  net.minecraft.network.FriendlyByteBuf
- *  net.minecraft.network.codec.StreamCodec
- *  net.minecraft.network.protocol.common.custom.CustomPacketPayload
- *  net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type
- *  net.minecraft.resources.Identifier
- *  net.minecraft.server.level.ServerPlayer
- *  net.minecraft.world.inventory.AbstractContainerMenu
- */
 package net.exerion.network;
 
 import net.exerion.block.entity.ProgressionTerminalBlockEntity;
@@ -57,7 +42,7 @@ public class ExerionNetwork {
         ClientPlayNetworking.registerGlobalReceiver(SYNC_ERA_PACKET_TYPE, (payload, context) -> context.client().execute(() -> {
             if (context.client().player != null) {
                 TechnologyEra era = TechnologyEra.fromId(payload.eraId());
-                context.client().player.setAttached(ModAttachments.PLAYER_ERA, (Object)era);
+                context.client().player.setAttached(ModAttachments.PLAYER_ERA, era);
             }
         }));
     }
@@ -68,7 +53,7 @@ public class ExerionNetwork {
 
     public record AdvanceEraPayload() implements CustomPacketPayload
     {
-        public static final StreamCodec<FriendlyByteBuf, AdvanceEraPayload> CODEC = StreamCodec.unit((Object)new AdvanceEraPayload());
+        public static final StreamCodec<FriendlyByteBuf, AdvanceEraPayload> CODEC = StreamCodec.unit(new AdvanceEraPayload());
 
         public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
             return ADVANCE_ERA_PACKET_TYPE;

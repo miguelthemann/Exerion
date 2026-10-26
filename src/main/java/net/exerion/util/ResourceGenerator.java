@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- */
 package net.exerion.util;
 
 import java.awt.AlphaComposite;
@@ -84,7 +81,7 @@ public class ResourceGenerator {
         ResourceGenerator.writeShapedRecipe(recipeDir, "water_wheel", "exerion:water_wheel", 1, new String[]{"IWI", "WCW", "IWI"}, "I", "minecraft:iron_ingot", "W", "minecraft:oak_planks", "C", "minecraft:cobblestone");
         File clientItemDir = new File("src/main/resources/assets/exerion/items");
         clientItemDir.mkdirs();
-        ArrayList allItems = new ArrayList();
+        ArrayList<String> allItems = new ArrayList<String>();
         Collections.addAll(allItems, selfDropBlocks);
         Collections.addAll(allItems, ores);
         Collections.addAll(allItems, "exerion_core", "raw_exerion", "exerion_ingot", "exerion_nugget", "exerion_gear", "exerion_plate", "exerion_rod", "copper_gear", "iron_gear", "steel_compound", "coal_dust", "iron_dust", "copper_dust", "gear_blueprint", "steel_ingot", "wrench", "steam_crystal", "circuit_board", "era_scanner", "logic_chip", "speed_upgrade", "efficiency_upgrade", "steam_boots", "electric_plate", "logic_helmet", "exerion_guide_book", "electric_mining_drill", "carbon_plate", "plasma_sword", "shaft", "hand_crank", "water_wheel", "mechanical_chute", "pump", "frequency_ender_tank", "electric_furnace");

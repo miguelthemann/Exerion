@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.components.EditBox
- *  net.minecraft.client.gui.components.events.GuiEventListener
- *  net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
- *  net.minecraft.client.input.KeyEvent
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.Slot
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion.client;
 
 import java.lang.reflect.Field;
@@ -34,7 +19,7 @@ extends AbstractContainerScreen<DigitalStorageTerminalMenu> {
     private EditBox searchBox;
 
     public DigitalStorageTerminalScreen(DigitalStorageTerminalMenu menu, Inventory playerInventory, Component title) {
-        super((AbstractContainerMenu)menu, playerInventory, title, 176, 222);
+        super(menu, playerInventory, title, 176, 222);
     }
 
     protected void init() {
@@ -47,7 +32,7 @@ extends AbstractContainerScreen<DigitalStorageTerminalMenu> {
         this.searchBox.setBordered(false);
         this.searchBox.setTextColor(-1);
         this.searchBox.setMaxLength(20);
-        this.addRenderableWidget((GuiEventListener)this.searchBox);
+        this.addRenderableWidget(this.searchBox);
     }
 
     private void setSlotPosition(Slot slot, int x, int y) {

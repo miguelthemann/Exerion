@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  mezz.jei.api.constants.VanillaTypes
- *  mezz.jei.api.gui.builder.IRecipeLayoutBuilder
- *  mezz.jei.api.gui.drawable.IDrawable
- *  mezz.jei.api.gui.ingredient.IRecipeSlotsView
- *  mezz.jei.api.helpers.IGuiHelper
- *  mezz.jei.api.ingredients.IIngredientType
- *  mezz.jei.api.recipe.IFocusGroup
- *  mezz.jei.api.recipe.RecipeIngredientRole
- *  mezz.jei.api.recipe.RecipeType
- *  mezz.jei.api.recipe.category.IRecipeCategory
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.network.chat.Component
- *  net.minecraft.resources.Identifier
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.ItemLike
- */
 package net.exerion.compat.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -48,7 +28,7 @@ implements IRecipeCategory<CrusherJeiRecipe> {
     public CrusherRecipeCategory(IGuiHelper helper) {
         Identifier texture = Identifier.fromNamespaceAndPath((String)"minecraft", (String)"textures/gui/container/furnace.png");
         this.background = helper.createDrawable(texture, 55, 16, 82, 54);
-        this.icon = helper.createDrawableIngredient((IIngredientType)VanillaTypes.ITEM_STACK, (Object)new ItemStack((ItemLike)ModBlocks.CRUSHER));
+        this.icon = helper.createDrawableIngredient((IIngredientType)VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.CRUSHER));
     }
 
     public RecipeType<CrusherJeiRecipe> getRecipeType() {
@@ -65,6 +45,11 @@ implements IRecipeCategory<CrusherJeiRecipe> {
 
     public int getHeight() {
         return 54;
+    }
+
+    @Override
+    public IDrawable getBackground() {
+        return this.background;
     }
 
     public IDrawable getIcon() {

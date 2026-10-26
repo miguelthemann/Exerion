@@ -1,28 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.Direction$Plane
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.SolarPanelBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
@@ -50,25 +27,20 @@ implements MenuProvider,
 IEnergyStorage {
     private int energy = 0;
     private boolean isGenerating = false;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ SolarPanelBlockEntity this$0;
-        {
-            SolarPanelBlockEntity solarPanelBlockEntity = this$0;
-            Objects.requireNonNull(solarPanelBlockEntity);
-            this.this$0 = solarPanelBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.getMaxEnergy();
+                case 0 -> SolarPanelBlockEntity.this.energy;
+                case 1 -> SolarPanelBlockEntity.this.getMaxEnergy();
                 case 2 -> {
-                    if (this.this$0.isGenerating) {
+                    if (SolarPanelBlockEntity.this.isGenerating) {
                         yield 1;
                     }
                     yield 0;
                 }
-                case 3 -> this.this$0.getGenerationRate();
+                case 3 -> SolarPanelBlockEntity.this.getGenerationRate();
                 default -> 0;
             };
         }
@@ -76,11 +48,11 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    SolarPanelBlockEntity.this.energy = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.isGenerating = value == 1;
+                    SolarPanelBlockEntity.this.isGenerating = value == 1;
                 }
             }
         }
@@ -145,7 +117,7 @@ IEnergyStorage {
         if (level.isClientSide()) {
             return;
         }
-        boolean wasActive = (Boolean)state.getValue((Property)SolarPanelBlock.ACTIVE);
+        boolean wasActive = (Boolean)state.getValue(SolarPanelBlock.ACTIVE);
         boolean hasSky = level.canSeeSky(pos.above());
         boolean isDay = level.getOverworldClockTime() % 24000L < 12000L;
         this.isGenerating = canGenerate = isDay && hasSky;
@@ -157,7 +129,7 @@ IEnergyStorage {
             }
         }
         if (wasActive != canGenerate) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)SolarPanelBlock.ACTIVE, (Comparable)Boolean.valueOf(canGenerate)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(SolarPanelBlock.ACTIVE, canGenerate), 3);
         }
         if (this.energy > 0) {
             int toPush;

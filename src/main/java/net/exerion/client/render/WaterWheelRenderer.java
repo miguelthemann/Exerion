@@ -1,26 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.vertex.PoseStack
- *  com.mojang.math.Axis
- *  net.minecraft.client.renderer.SubmitNodeCollector
- *  net.minecraft.client.renderer.block.BlockModelRenderState
- *  net.minecraft.client.renderer.block.BlockModelResolver
- *  net.minecraft.client.renderer.block.model.BlockDisplayContext
- *  net.minecraft.client.renderer.blockentity.BlockEntityRenderer
- *  net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context
- *  net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
- *  net.minecraft.client.renderer.feature.ModelFeatureRenderer$CrumblingOverlay
- *  net.minecraft.client.renderer.state.level.CameraRenderState
- *  net.minecraft.client.renderer.texture.OverlayTexture
- *  net.minecraft.core.Direction
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.phys.Vec3
- *  org.joml.Quaternionfc
- */
 package net.exerion.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -45,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionfc;
 
 public class WaterWheelRenderer
-implements BlockEntityRenderer<WaterWheelBlockEntity, WaterWheelRenderState> {
+implements BlockEntityRenderer<WaterWheelBlockEntity, WaterWheelRenderer.WaterWheelRenderState> {
     private final BlockModelResolver modelResolver;
     private final BlockModelRenderState modelRenderState = new BlockModelRenderState();
 
@@ -61,7 +38,7 @@ implements BlockEntityRenderer<WaterWheelBlockEntity, WaterWheelRenderState> {
         BlockEntityRenderState.extractBase((BlockEntity)blockEntity, (BlockEntityRenderState)renderState, (ModelFeatureRenderer.CrumblingOverlay)crumblingOverlay);
         renderState.blockState = blockEntity.getBlockState();
         if (renderState.blockState != null && renderState.blockState.getBlock() instanceof WaterWheelBlock) {
-            renderState.spinning = (Boolean)renderState.blockState.getValue((Property)WaterWheelBlock.SPINNING);
+            renderState.spinning = (Boolean)renderState.blockState.getValue(WaterWheelBlock.SPINNING);
             renderState.facing = (Direction)renderState.blockState.getValue(WaterWheelBlock.FACING);
             renderState.rotationAngle = blockEntity.visualRotationAngle;
         }

@@ -1,40 +1,6 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.Vec3i
- *  net.minecraft.core.particles.ParticleOptions
- *  net.minecraft.core.particles.ParticleTypes
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.Blocks
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  net.minecraft.world.phys.AABB
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
 import java.util.List;
-import java.util.Objects;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.item.ModItems;
@@ -72,35 +38,24 @@ public class MiningLaserBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 1){
-        final /* synthetic */ MiningLaserBlockEntity this$0;
-        {
-            MiningLaserBlockEntity miningLaserBlockEntity = this$0;
-            Objects.requireNonNull(miningLaserBlockEntity);
-            this.this$0 = miningLaserBlockEntity;
-            super(arg0);
-        }
-
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private final SimpleContainer inventory = new SimpleContainer(1) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            MiningLaserBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
     private final int maxEnergy = 20000;
     private int tickCounter = 0;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ MiningLaserBlockEntity this$0;
-        {
-            MiningLaserBlockEntity miningLaserBlockEntity = this$0;
-            Objects.requireNonNull(miningLaserBlockEntity);
-            this.this$0 = miningLaserBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
+                case 0 -> MiningLaserBlockEntity.this.energy;
+                case 1 -> MiningLaserBlockEntity.this.maxEnergy;
                 default -> 0;
             };
         }
@@ -108,7 +63,7 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    MiningLaserBlockEntity.this.energy = value;
                 }
             }
         }
@@ -148,7 +103,7 @@ IEnergyStorage {
             return;
         }
         ++this.tickCounter;
-        boolean hasSpeedUpgrade = this.inventory.getItem(0).is((Object)ModItems.SPEED_UPGRADE);
+        boolean hasSpeedUpgrade = this.inventory.getItem(0).is(ModItems.SPEED_UPGRADE);
         int n = cycleInterval = hasSpeedUpgrade ? 20 : 40;
         if (this.tickCounter >= cycleInterval) {
             this.tickCounter = 0;
@@ -157,7 +112,7 @@ IEnergyStorage {
     }
 
     private void performMiningCycle(Level level, BlockPos pos) {
-        List droppedItems = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(1.5, 1.5, 1.5));
+        List<ItemEntity> droppedItems = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(1.5, 1.5, 1.5));
         for (ItemEntity itemEntity : droppedItems) {
             ItemStack stack = itemEntity.getItem();
             if (stack.isEmpty()) continue;
@@ -176,7 +131,7 @@ IEnergyStorage {
                 for (int z = -1; z <= 1; ++z) {
                     BlockPos current = pos.offset(x, y, z);
                     BlockState currentSt = level.getBlockState(current);
-                    if (currentSt.isAir() || currentSt.is((Object)Blocks.BEDROCK) || !currentSt.getFluidState().isEmpty()) continue;
+                    if (currentSt.isAir() || currentSt.is(Blocks.BEDROCK) || !currentSt.getFluidState().isEmpty()) continue;
                     targetPos = current;
                     break block1;
                 }
@@ -189,7 +144,7 @@ IEnergyStorage {
             BlockState targetState = level.getBlockState(targetPos);
             ServerLevel serverLevel = (ServerLevel)level;
             BlockEntity targetBe = level.getBlockEntity(targetPos);
-            List drops = Block.getDrops((BlockState)targetState, (ServerLevel)serverLevel, targetPos, (BlockEntity)targetBe);
+            List<ItemStack> drops = Block.getDrops(targetState, serverLevel, targetPos, targetBe);
             for (ItemStack drop : drops) {
                 boolean fullyRouted;
                 if (drop.isEmpty() || (fullyRouted = this.routeToAdjacentInventories(level, pos, drop)) || drop.isEmpty()) continue;
@@ -217,23 +172,23 @@ IEnergyStorage {
     }
 
     private boolean routeToAdjacentInventories(Level level, BlockPos pos, ItemStack stack) {
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : DIRECTIONS) {
             BlockPos sidePos = pos.relative(dir);
             BlockEntity sideBe = level.getBlockEntity(sidePos);
-            if (!(sideBe instanceof Container)) continue;
-            Container container = (Container)sideBe;
-            if (sideBe instanceof MiningLaserBlockEntity) continue;
+            if (!(sideBe instanceof Container container) || sideBe instanceof MiningLaserBlockEntity) continue;
             for (int slot = 0; slot < container.getContainerSize(); ++slot) {
                 ItemStack slotStack = container.getItem(slot);
                 if (slotStack.isEmpty()) {
                     container.setItem(slot, stack.copy());
                     stack.setCount(0);
+                    container.setChanged();
                     return true;
                 }
-                if (!ItemStack.isSameItemSameComponents((ItemStack)slotStack, (ItemStack)stack) || slotStack.getCount() >= slotStack.getMaxStackSize()) continue;
+                if (!ItemStack.isSameItemSameComponents(slotStack, stack) || slotStack.getCount() >= slotStack.getMaxStackSize()) continue;
                 int add = Math.min(stack.getCount(), slotStack.getMaxStackSize() - slotStack.getCount());
                 slotStack.grow(add);
                 stack.shrink(add);
+                container.setChanged();
                 if (!stack.isEmpty()) continue;
                 return true;
             }
@@ -256,7 +211,7 @@ IEnergyStorage {
         ValueOutput invOutput = output.child("Inventory");
         ItemStack upgradeStack = this.inventory.getItem(0);
         if (!upgradeStack.isEmpty()) {
-            invOutput.store("UpgradeSlot", ItemStack.CODEC, (Object)upgradeStack);
+            invOutput.store("UpgradeSlot", ItemStack.CODEC, upgradeStack);
         }
     }
 

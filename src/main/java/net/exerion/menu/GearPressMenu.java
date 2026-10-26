@@ -1,20 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.Container
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.inventory.SimpleContainerData
- *  net.minecraft.world.inventory.Slot
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion.menu;
 
-import java.util.Objects;
 import net.exerion.block.entity.GearPressBlockEntity;
 import net.exerion.item.ModItems;
 import net.exerion.menu.ModMenuTypes;
@@ -42,24 +27,16 @@ extends AbstractContainerMenu {
         GearPressMenu.checkContainerSize((Container)container, (int)3);
         this.addDataSlots(data);
         this.addSlot(new Slot(container, 0, 56, 35));
-        this.addSlot(new Slot(this, container, 1, 116, 35){
-            {
-                Objects.requireNonNull(this$0);
-                super(arg0, arg1, arg2, arg3);
-            }
-
+        this.addSlot(new Slot(container, 1, 116, 35) {
+            @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
             }
         });
-        this.addSlot(new Slot(this, container, 2, 152, 17){
-            {
-                Objects.requireNonNull(this$0);
-                super(arg0, arg1, arg2, arg3);
-            }
-
+        this.addSlot(new Slot(container, 2, 152, 17) {
+            @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is((Object)ModItems.SPEED_UPGRADE) || stack.is((Object)ModItems.EFFICIENCY_UPGRADE);
+                return stack.is(ModItems.SPEED_UPGRADE) || stack.is(ModItems.EFFICIENCY_UPGRADE);
             }
         });
         for (int row = 0; row < 3; ++row) {
@@ -95,7 +72,7 @@ extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             result = slotStack.copy();
-            if (index < 3 ? !this.moveItemStackTo(slotStack, 3, this.slots.size(), true) : (slotStack.is((Object)ModItems.SPEED_UPGRADE) || slotStack.is((Object)ModItems.EFFICIENCY_UPGRADE) ? !this.moveItemStackTo(slotStack, 2, 3, false) && !this.moveItemStackTo(slotStack, 0, 1, false) : !this.moveItemStackTo(slotStack, 0, 1, false))) {
+            if (index < 3 ? !this.moveItemStackTo(slotStack, 3, this.slots.size(), true) : (slotStack.is(ModItems.SPEED_UPGRADE) || slotStack.is(ModItems.EFFICIENCY_UPGRADE) ? !this.moveItemStackTo(slotStack, 2, 3, false) && !this.moveItemStackTo(slotStack, 0, 1, false) : !this.moveItemStackTo(slotStack, 0, 1, false))) {
                 return ItemStack.EMPTY;
             }
             if (slotStack.isEmpty()) {

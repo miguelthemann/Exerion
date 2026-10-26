@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.Container
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.inventory.SimpleContainerData
- *  net.minecraft.world.inventory.Slot
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion.menu;
 
 import net.exerion.block.entity.ElectricGeneratorBlockEntity;
