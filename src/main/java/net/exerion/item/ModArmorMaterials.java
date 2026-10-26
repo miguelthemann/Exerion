@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.Identifier
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.tags.TagKey
- *  net.minecraft.world.item.equipment.ArmorMaterial
- *  net.minecraft.world.item.equipment.ArmorType
- *  net.minecraft.world.item.equipment.EquipmentAsset
- *  net.minecraft.world.item.equipment.EquipmentAssets
- */
 package net.exerion.item;
 
 import java.util.Map;

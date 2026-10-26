@@ -1,23 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.vertex.PoseStack
- *  net.minecraft.client.renderer.SubmitNodeCollector
- *  net.minecraft.client.renderer.block.BlockModelRenderState
- *  net.minecraft.client.renderer.block.BlockModelResolver
- *  net.minecraft.client.renderer.block.model.BlockDisplayContext
- *  net.minecraft.client.renderer.blockentity.BlockEntityRenderer
- *  net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider$Context
- *  net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
- *  net.minecraft.client.renderer.feature.ModelFeatureRenderer$CrumblingOverlay
- *  net.minecraft.client.renderer.state.level.CameraRenderState
- *  net.minecraft.client.renderer.texture.OverlayTexture
- *  net.minecraft.util.Mth
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.phys.Vec3
- */
 package net.exerion.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -39,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class PumpRenderer
-implements BlockEntityRenderer<PumpBlockEntity, PumpRenderState> {
+implements BlockEntityRenderer<PumpBlockEntity, PumpRenderer.PumpRenderState> {
     private final BlockModelResolver modelResolver;
     private final BlockModelRenderState modelRenderState = new BlockModelRenderState();
 

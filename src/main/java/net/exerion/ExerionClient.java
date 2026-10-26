@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.api.ClientModInitializer
- *  net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
- *  net.minecraft.client.gui.screens.MenuScreens
- *  net.minecraft.client.renderer.blockentity.BlockEntityRenderers
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.EquipmentSlot
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion;
 
 import net.exerion.Exerion;
@@ -77,7 +63,7 @@ implements ClientModInitializer {
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
             double motionY;
             ItemStack boots;
-            if (client.player != null && !(boots = client.player.getItemBySlot(EquipmentSlot.FEET)).isEmpty() && boots.is((Object)ModItems.STEAM_BOOTS) && boots.getDamageValue() < boots.getMaxDamage() && (motionY = client.player.getDeltaMovement().y) > 0.4 && motionY < 0.45 && !client.player.onGround() && client.player.tickCount % 5 == 0) {
+            if (client.player != null && !(boots = client.player.getItemBySlot(EquipmentSlot.FEET)).isEmpty() && boots.is(ModItems.STEAM_BOOTS) && boots.getDamageValue() < boots.getMaxDamage() && (motionY = client.player.getDeltaMovement().y) > 0.4 && motionY < 0.45 && !client.player.onGround() && client.player.tickCount % 5 == 0) {
                 client.player.setDeltaMovement(client.player.getDeltaMovement().add(0.0, 0.35, 0.0));
                 client.player.level().playSound((Entity)client.player, client.player.getX(), client.player.getY(), client.player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 0.4f, 2.0f);
                 boots.setDamageValue(Math.min(boots.getMaxDamage(), boots.getDamageValue() + 2));

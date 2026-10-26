@@ -1,20 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.sounds.SoundEvent
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.effect.MobEffectInstance
- *  net.minecraft.world.effect.MobEffects
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.EquipmentSlot
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion.item;
 
 import net.exerion.item.ModItems;
@@ -48,7 +31,7 @@ extends Item {
                 if (player.tickCount % 2 == 0 && stack.getDamageValue() < stack.getMaxDamage()) {
                     for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
                         ItemStack invStack = player.getInventory().getItem(i);
-                        if (invStack.isEmpty() || invStack == stack || !invStack.is((Object)ModItems.ERA_SCANNER) && !invStack.is((Object)ModItems.ELECTRIC_MINING_DRILL) && !invStack.is((Object)ModItems.PLASMA_SWORD) || invStack.getDamageValue() <= 0) continue;
+                        if (invStack.isEmpty() || invStack == stack || !invStack.is(ModItems.ERA_SCANNER) && !invStack.is(ModItems.ELECTRIC_MINING_DRILL) && !invStack.is(ModItems.PLASMA_SWORD) || invStack.getDamageValue() <= 0) continue;
                         invStack.setDamageValue(invStack.getDamageValue() - 1);
                         stack.setDamageValue(Math.min(stack.getMaxDamage(), stack.getDamageValue() + 1));
                         break;

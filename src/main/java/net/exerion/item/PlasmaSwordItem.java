@@ -1,27 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.component.DataComponents
- *  net.minecraft.core.particles.ParticleOptions
- *  net.minecraft.core.particles.ParticleTypes
- *  net.minecraft.nbt.CompoundTag
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerLevel
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.InteractionHand
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.EquipmentSlot
- *  net.minecraft.world.entity.LivingEntity
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.component.CustomData
- *  net.minecraft.world.level.Level
- */
 package net.exerion.item;
 
 import net.minecraft.core.component.DataComponents;
@@ -59,10 +35,10 @@ extends Item {
     }
 
     public static void setActive(ItemStack stack, boolean active) {
-        stack.update(DataComponents.CUSTOM_DATA, (Object)CustomData.EMPTY, customData -> {
+        stack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, customData -> {
             CompoundTag tag = customData.copyTag();
             tag.putBoolean("Active", active);
-            return CustomData.of((CompoundTag)tag);
+            return CustomData.of(tag);
         });
     }
 

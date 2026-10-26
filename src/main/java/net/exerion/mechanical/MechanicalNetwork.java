@@ -1,21 +1,9 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.Direction$Axis
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- */
 package net.exerion.mechanical;
 
+import java.util.ArrayDeque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import net.exerion.block.ShaftBlock;
 import net.exerion.block.entity.ShaftBlockEntity;
-import net.exerion.mechanical.IFMSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -25,43 +13,53 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MechanicalNetwork {
     public static final int MAX_PROPAGATION_DISTANCE = 24;
     public static final int LOSS_INTERVAL = 4;
+    private static final Direction[] DIRECTIONS = Direction.values();
+
+    private record NetworkNode(BlockPos pos, int distance) {}
 
     public static int getAvailableFM(Level level, BlockPos machinePos) {
         if (level.isClientSide()) {
             return 0;
         }
-        HashSet<BlockPos> visited = new HashSet<BlockPos>();
-        LinkedList<long[]> queue = new LinkedList<long[]>();
+        HashSet<BlockPos> visited = new HashSet<>();
+        ArrayDeque<NetworkNode> queue = new ArrayDeque<>();
         visited.add(machinePos);
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : DIRECTIONS) {
             BlockPos neighbor = machinePos.relative(dir);
-            if (visited.contains(neighbor)) continue;
-            visited.add(neighbor);
-            queue.add(new long[]{neighbor.getX(), neighbor.getY(), neighbor.getZ(), 1L});
+            if (visited.add(neighbor)) {
+                queue.add(new NetworkNode(neighbor, 1));
+            }
         }
         int totalFM = 0;
         while (!queue.isEmpty()) {
-            BlockState shaftState;
-            long[] current = (long[])queue.poll();
-            BlockPos pos = new BlockPos((int)current[0], (int)current[1], (int)current[2]);
-            int distance = (int)current[3];
-            if (distance > 24) continue;
+            NetworkNode current = queue.poll();
+            BlockPos pos = current.pos();
+            int distance = current.distance();
+            if (distance > MAX_PROPAGATION_DISTANCE) {
+                continue;
+            }
             BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof IFMSource) {
-                IFMSource source = (IFMSource)be;
+            if (be instanceof IFMSource source) {
                 int outputFM = source.getOutputFM();
-                int loss = distance / 4;
+                int loss = distance / LOSS_INTERVAL;
                 int effectiveFM = Math.max(0, outputFM - loss);
                 totalFM += effectiveFM;
                 continue;
             }
-            if (!(be instanceof ShaftBlockEntity) || !(shaftState = level.getBlockState(pos)).hasProperty(ShaftBlock.AXIS)) continue;
-            Direction.Axis axis = (Direction.Axis)shaftState.getValue(ShaftBlock.AXIS);
-            for (Direction dir : Direction.values()) {
-                BlockPos neighbor;
-                if (dir.getAxis() != axis || visited.contains(neighbor = pos.relative(dir))) continue;
-                visited.add(neighbor);
-                queue.add(new long[]{neighbor.getX(), neighbor.getY(), neighbor.getZ(), distance + 1});
+            if (be instanceof ShaftBlockEntity) {
+                BlockState shaftState = level.getBlockState(pos);
+                if (shaftState.hasProperty(ShaftBlock.AXIS)) {
+                    Direction.Axis axis = shaftState.getValue(ShaftBlock.AXIS);
+                    for (Direction dir : DIRECTIONS) {
+                        if (dir.getAxis() != axis) {
+                            continue;
+                        }
+                        BlockPos neighbor = pos.relative(dir);
+                        if (visited.add(neighbor)) {
+                            queue.add(new NetworkNode(neighbor, distance + 1));
+                        }
+                    }
+                }
             }
         }
         return totalFM;
@@ -71,32 +69,40 @@ public class MechanicalNetwork {
         if (level.isClientSide()) {
             return false;
         }
-        HashSet<BlockPos> visited = new HashSet<BlockPos>();
-        LinkedList<long[]> queue = new LinkedList<long[]>();
+        HashSet<BlockPos> visited = new HashSet<>();
+        ArrayDeque<NetworkNode> queue = new ArrayDeque<>();
         visited.add(startPos);
-        queue.add(new long[]{startPos.getX(), startPos.getY(), startPos.getZ(), 0L});
+        queue.add(new NetworkNode(startPos, 0));
         while (!queue.isEmpty()) {
-            BlockState shaftState;
-            long[] current = (long[])queue.poll();
-            BlockPos pos = new BlockPos((int)current[0], (int)current[1], (int)current[2]);
-            int distance = (int)current[3];
-            if (distance > 24) continue;
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof IFMSource) {
-                IFMSource source = (IFMSource)be;
-                if (!source.isGeneratingFM()) continue;
-                return true;
+            NetworkNode current = queue.poll();
+            BlockPos pos = current.pos();
+            int distance = current.distance();
+            if (distance > MAX_PROPAGATION_DISTANCE) {
+                continue;
             }
-            if (!(be instanceof ShaftBlockEntity) || !(shaftState = level.getBlockState(pos)).hasProperty(ShaftBlock.AXIS)) continue;
-            Direction.Axis axis = (Direction.Axis)shaftState.getValue(ShaftBlock.AXIS);
-            for (Direction dir : Direction.values()) {
-                BlockPos neighbor;
-                if (dir.getAxis() != axis || visited.contains(neighbor = pos.relative(dir))) continue;
-                visited.add(neighbor);
-                queue.add(new long[]{neighbor.getX(), neighbor.getY(), neighbor.getZ(), distance + 1});
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof IFMSource source) {
+                if (source.isGeneratingFM()) {
+                    return true;
+                }
+                continue;
+            }
+            if (be instanceof ShaftBlockEntity) {
+                BlockState shaftState = level.getBlockState(pos);
+                if (shaftState.hasProperty(ShaftBlock.AXIS)) {
+                    Direction.Axis axis = shaftState.getValue(ShaftBlock.AXIS);
+                    for (Direction dir : DIRECTIONS) {
+                        if (dir.getAxis() != axis) {
+                            continue;
+                        }
+                        BlockPos neighbor = pos.relative(dir);
+                        if (visited.add(neighbor)) {
+                            queue.add(new NetworkNode(neighbor, distance + 1));
+                        }
+                    }
+                }
             }
         }
         return false;
     }
 }
-

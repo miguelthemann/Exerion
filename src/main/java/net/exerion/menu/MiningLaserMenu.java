@@ -1,20 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.Container
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.inventory.SimpleContainerData
- *  net.minecraft.world.inventory.Slot
- *  net.minecraft.world.item.ItemStack
- */
 package net.exerion.menu;
 
-import java.util.Objects;
 import net.exerion.block.entity.MiningLaserBlockEntity;
 import net.exerion.item.ModItems;
 import net.exerion.menu.ModMenuTypes;
@@ -41,14 +26,10 @@ extends AbstractContainerMenu {
         this.containerData = data;
         MiningLaserMenu.checkContainerSize((Container)container, (int)1);
         this.addDataSlots(data);
-        this.addSlot(new Slot(this, container, 0, 80, 45){
-            {
-                Objects.requireNonNull(this$0);
-                super(arg0, arg1, arg2, arg3);
-            }
-
+        this.addSlot(new Slot(container, 0, 80, 45) {
+            @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is((Object)ModItems.SPEED_UPGRADE);
+                return stack.is(ModItems.SPEED_UPGRADE);
             }
         });
         for (int row = 0; row < 3; ++row) {
@@ -92,7 +73,7 @@ extends AbstractContainerMenu {
                 if (!this.moveItemStackTo(slotStack, 1, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (slotStack.is((Object)ModItems.SPEED_UPGRADE)) {
+            } else if (slotStack.is(ModItems.SPEED_UPGRADE)) {
                 if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }

@@ -1,22 +1,10 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Blocks
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- */
 package net.exerion.block.entity;
 
 import net.exerion.block.entity.FrequencyEnderTankBlockEntity;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.fluid.GlobalFluidNetwork;
 import net.exerion.mechanical.IFMConsumer;
+import net.exerion.mechanical.MechanicalNetwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -29,6 +17,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class PumpBlockEntity
 extends BlockEntity
 implements IFMConsumer {
+    private static final Direction[] DIRECTIONS = Direction.values();
     private int pumpCooldown = 0;
     private int pumpDepth = 0;
     private boolean isPumping = false;
@@ -64,12 +53,19 @@ implements IFMConsumer {
             }
             return;
         }
+        if (MechanicalNetwork.getAvailableFM(level, pos) < this.getRequiredFM()) {
+            if (this.isPumping) {
+                this.isPumping = false;
+                this.sync();
+            }
+            return;
+        }
         int foundDepth = 0;
         BlockPos targetLava = null;
         int i = 1;
-        while (i <= 64 && ((checkState = level.getBlockState(checkPos = pos.below(i))).isAir() || checkState.is((Object)Blocks.LAVA))) {
+        while (i <= 64 && ((checkState = level.getBlockState(checkPos = pos.below(i))).isAir() || checkState.is(Blocks.LAVA))) {
             foundDepth = i++;
-            if (!checkState.is((Object)Blocks.LAVA)) continue;
+            if (!checkState.is(Blocks.LAVA)) continue;
             targetLava = checkPos;
             break;
         }
@@ -79,8 +75,15 @@ implements IFMConsumer {
             stateChanged = true;
         }
         if (targetLava != null) {
+            if (MechanicalNetwork.getAvailableFM(level, pos) < this.getRequiredFM()) {
+                if (this.isPumping) {
+                    this.isPumping = false;
+                    this.sync();
+                }
+                return;
+            }
             boolean successfullyPumped = false;
-            for (Direction dir : Direction.values()) {
+            for (Direction dir : DIRECTIONS) {
                 FrequencyEnderTankBlockEntity tankBE;
                 int injected;
                 BlockEntity neighbor = level.getBlockEntity(pos.relative(dir));

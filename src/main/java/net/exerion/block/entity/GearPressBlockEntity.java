@@ -1,34 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import java.util.UUID;
 import net.exerion.block.GearPressBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
@@ -65,35 +36,23 @@ public class GearPressBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IFMConsumer {
-    private final SimpleContainer inventory = new SimpleContainer(this, 3){
-        final /* synthetic */ GearPressBlockEntity this$0;
-        {
-            GearPressBlockEntity gearPressBlockEntity = this$0;
-            Objects.requireNonNull(gearPressBlockEntity);
-            this.this$0 = gearPressBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(3) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            GearPressBlockEntity.this.setChanged();
         }
     };
     private int pressTime = 0;
     @Nullable
     private UUID lastPlayerUUID;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ GearPressBlockEntity this$0;
-        {
-            GearPressBlockEntity gearPressBlockEntity = this$0;
-            Objects.requireNonNull(gearPressBlockEntity);
-            this.this$0 = gearPressBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.pressTime;
-                case 1 -> this.this$0.getMaxPressTime();
+                case 0 -> GearPressBlockEntity.this.pressTime;
+                case 1 -> GearPressBlockEntity.this.getMaxPressTime();
                 default -> 0;
             };
         }
@@ -101,7 +60,7 @@ IFMConsumer {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.pressTime = value;
+                    GearPressBlockEntity.this.pressTime = value;
                 }
             }
         }
@@ -125,7 +84,7 @@ IFMConsumer {
 
     public int getMaxPressTime() {
         ItemStack upgrade = this.inventory.getItem(2);
-        if (upgrade.is((Object)ModItems.SPEED_UPGRADE)) {
+        if (upgrade.is(ModItems.SPEED_UPGRADE)) {
             return 40;
         }
         return 100;
@@ -145,7 +104,7 @@ IFMConsumer {
         if (level.isClientSide()) {
             return;
         }
-        boolean wasPressing = (Boolean)state.getValue((Property)GearPressBlock.PRESSING);
+        boolean wasPressing = (Boolean)state.getValue(GearPressBlock.PRESSING);
         boolean isPressing = false;
         int availableFM = MechanicalNetwork.getAvailableFM(level, pos);
         if (availableFM < this.getRequiredFM()) {
@@ -154,7 +113,7 @@ IFMConsumer {
             }
             this.pressTime = 0;
             if (wasPressing) {
-                level.setBlock(pos, (BlockState)state.setValue((Property)GearPressBlock.PRESSING, (Comparable)Boolean.valueOf(false)), 3);
+                level.setBlock(pos, (BlockState)state.setValue(GearPressBlock.PRESSING, false), 3);
             }
             return;
         }
@@ -196,7 +155,7 @@ IFMConsumer {
             this.pressTime = 0;
         }
         if (wasPressing != isPressing) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)GearPressBlock.PRESSING, (Comparable)Boolean.valueOf(isPressing)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(GearPressBlock.PRESSING, isPressing), 3);
         }
     }
 
@@ -204,16 +163,16 @@ IFMConsumer {
         if (input.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        if (input.is((Object)ModItems.EXERION_INGOT)) {
+        if (input.is(ModItems.EXERION_INGOT)) {
             return new ItemStack((ItemLike)ModItems.EXERION_PLATE);
         }
-        if (input.is((Object)Items.IRON_INGOT)) {
+        if (input.is(Items.IRON_INGOT)) {
             return new ItemStack((ItemLike)ModItems.IRON_GEAR);
         }
-        if (input.is((Object)Items.COPPER_INGOT)) {
+        if (input.is(Items.COPPER_INGOT)) {
             return new ItemStack((ItemLike)ModItems.COPPER_GEAR);
         }
-        if (input.is((Object)ModItems.EXERION_PLATE)) {
+        if (input.is(ModItems.EXERION_PLATE)) {
             return new ItemStack((ItemLike)ModItems.EXERION_GEAR);
         }
         return ItemStack.EMPTY;
@@ -223,7 +182,7 @@ IFMConsumer {
         if (outputSlot.isEmpty()) {
             return true;
         }
-        if (!outputSlot.is((Object)result.getItem())) {
+        if (!outputSlot.is(result.getItem())) {
             return false;
         }
         return outputSlot.getCount() + result.getCount() <= outputSlot.getMaxStackSize();
@@ -265,7 +224,7 @@ IFMConsumer {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

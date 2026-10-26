@@ -1,20 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.item.context.UseOnContext
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.BlockStateProperties
- *  net.minecraft.world.level.block.state.properties.Property
- */
 package net.exerion.item;
 
 import net.minecraft.core.BlockPos;
@@ -43,21 +26,21 @@ extends Item {
         if (player == null) {
             return InteractionResult.PASS;
         }
-        String blockId = BuiltInRegistries.BLOCK.getKey((Object)state.getBlock()).getNamespace();
+        String blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace();
         if (!blockId.equals("exerion")) {
             return InteractionResult.PASS;
         }
         if (!level.isClientSide()) {
             if (player.isSecondaryUseActive()) {
                 level.destroyBlock(pos, true);
-            } else if (state.hasProperty((Property)BlockStateProperties.FACING)) {
-                Direction current = (Direction)state.getValue((Property)BlockStateProperties.FACING);
+            } else if (state.hasProperty(BlockStateProperties.FACING)) {
+                Direction current = (Direction)state.getValue(BlockStateProperties.FACING);
                 Direction next = this.getNextDirection(current);
-                level.setBlock(pos, (BlockState)state.setValue((Property)BlockStateProperties.FACING, (Comparable)next), 3);
-            } else if (state.hasProperty((Property)BlockStateProperties.HORIZONTAL_FACING)) {
-                Direction current = (Direction)state.getValue((Property)BlockStateProperties.HORIZONTAL_FACING);
+                level.setBlock(pos, (BlockState)state.setValue(BlockStateProperties.FACING, next), 3);
+            } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+                Direction current = (Direction)state.getValue(BlockStateProperties.HORIZONTAL_FACING);
                 Direction next = this.getNextHorizontalDirection(current);
-                level.setBlock(pos, (BlockState)state.setValue((Property)BlockStateProperties.HORIZONTAL_FACING, (Comparable)next), 3);
+                level.setBlock(pos, (BlockState)state.setValue(BlockStateProperties.HORIZONTAL_FACING, next), 3);
             }
         }
         return InteractionResult.SUCCESS;

@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
- *  net.fabricmc.fabric.api.attachment.v1.AttachmentType
- *  net.minecraft.resources.Identifier
- */
 package net.exerion.progression;
 
 import net.exerion.Exerion;

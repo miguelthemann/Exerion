@@ -1,17 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.CommandDispatcher
- *  com.mojang.brigadier.arguments.ArgumentType
- *  com.mojang.brigadier.arguments.StringArgumentType
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  net.minecraft.commands.CommandSourceStack
- *  net.minecraft.commands.Commands
- *  net.minecraft.network.chat.Component
- *  net.minecraft.server.level.ServerPlayer
- */
 package net.exerion.command;
 
 import com.mojang.brigadier.CommandDispatcher;

@@ -1,32 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.DynamicOps
- *  net.minecraft.core.BlockPos
- *  net.minecraft.nbt.CompoundTag
- *  net.minecraft.nbt.ListTag
- *  net.minecraft.nbt.NbtAccounter
- *  net.minecraft.nbt.NbtIo
- *  net.minecraft.nbt.NbtOps
- *  net.minecraft.nbt.Tag
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.LevelResource
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
 import com.mojang.serialization.DynamicOps;
@@ -34,7 +5,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.menu.FrequencyEnderChestMenu;
 import net.minecraft.core.BlockPos;
@@ -67,19 +37,14 @@ implements MenuProvider {
     private int color1 = 0;
     private int color2 = 0;
     private int color3 = 0;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ FrequencyEnderChestBlockEntity this$0;
-        {
-            FrequencyEnderChestBlockEntity frequencyEnderChestBlockEntity = this$0;
-            Objects.requireNonNull(frequencyEnderChestBlockEntity);
-            this.this$0 = frequencyEnderChestBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.color1;
-                case 1 -> this.this$0.color2;
-                case 2 -> this.this$0.color3;
+                case 0 -> FrequencyEnderChestBlockEntity.this.color1;
+                case 1 -> FrequencyEnderChestBlockEntity.this.color2;
+                case 2 -> FrequencyEnderChestBlockEntity.this.color3;
                 default -> 0;
             };
         }
@@ -87,18 +52,18 @@ implements MenuProvider {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.color1 = value;
+                    FrequencyEnderChestBlockEntity.this.color1 = value;
                     break;
                 }
                 case 1: {
-                    this.this$0.color2 = value;
+                    FrequencyEnderChestBlockEntity.this.color2 = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.color3 = value;
+                    FrequencyEnderChestBlockEntity.this.color3 = value;
                 }
             }
-            this.this$0.setChanged();
+            FrequencyEnderChestBlockEntity.this.setChanged();
         }
 
         public int getCount() {
@@ -171,6 +136,11 @@ implements MenuProvider {
         private static final Map<String, SimpleContainer> INVENTORIES = new HashMap<String, SimpleContainer>();
         private static boolean loaded = false;
 
+        public static void clear() {
+            INVENTORIES.clear();
+            loaded = false;
+        }
+
         public static SimpleContainer getInventory(final Level level, int c1, int c2, int c3) {
             if (level != null && !loaded) {
                 EnderStorageManager.load(level);
@@ -201,16 +171,18 @@ implements MenuProvider {
                     for (int i = 0; i < container.getContainerSize(); ++i) {
                         ItemStack stack = container.getItem(i);
                         if (stack.isEmpty()) continue;
-                        CompoundTag itemTag = new CompoundTag();
-                        itemTag.putByte("Slot", (byte)i);
-                        CompoundTag stackNbt = (CompoundTag)ItemStack.CODEC.encodeStart((DynamicOps)level.registryAccess().createSerializationContext((DynamicOps)NbtOps.INSTANCE), (Object)stack).getOrThrow();
-                        itemTag.put("Item", (Tag)stackNbt);
-                        list.add((Object)itemTag);
+                        final int slotIndex = i;
+                        ItemStack.CODEC.encodeStart(level.registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).result().ifPresent(stackNbt -> {
+                            CompoundTag itemTag = new CompoundTag();
+                            itemTag.putByte("Slot", (byte)slotIndex);
+                            itemTag.put("Item", stackNbt);
+                            list.add(itemTag);
+                        });
                     }
                     invs.put(entry.getKey(), (Tag)list);
                 }
                 tag.put("Inventories", (Tag)invs);
-                NbtIo.writeCompressed((CompoundTag)tag, (Path)file.toPath());
+                NbtIo.writeCompressed(tag, (Path)file.toPath());
             }
             catch (Exception e) {
                 System.err.println("[Exerion] Failed to save ender inventories: " + e.getMessage());
@@ -242,9 +214,10 @@ implements MenuProvider {
                         CompoundTag itemTag = list.getCompoundOrEmpty(i);
                         int slot = itemTag.getByteOr("Slot", (byte)0) & 0xFF;
                         CompoundTag stackNbt = itemTag.getCompoundOrEmpty("Item");
-                        ItemStack stack = (ItemStack)ItemStack.CODEC.parse((DynamicOps)level.registryAccess().createSerializationContext((DynamicOps)NbtOps.INSTANCE), (Object)stackNbt).getOrThrow();
-                        if (slot >= container.getContainerSize()) continue;
-                        container.setItem(slot, stack);
+                        ItemStack stack = ItemStack.CODEC.parse(level.registryAccess().createSerializationContext(NbtOps.INSTANCE), stackNbt).result().orElse(ItemStack.EMPTY);
+                        if (!stack.isEmpty() && slot < container.getContainerSize()) {
+                            container.setItem(slot, stack);
+                        }
                     }
                     INVENTORIES.put(key, container);
                 }

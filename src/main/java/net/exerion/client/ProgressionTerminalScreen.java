@@ -1,20 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.Minecraft
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.components.Button
- *  net.minecraft.client.gui.components.events.GuiEventListener
- *  net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
- *  net.minecraft.client.player.LocalPlayer
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.chat.FormattedText
- *  net.minecraft.network.chat.MutableComponent
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- */
 package net.exerion.client;
 
 import net.exerion.client.GuiHelper;
@@ -38,7 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public class ProgressionTerminalScreen
 extends AbstractContainerScreen<ProgressionTerminalMenu> {
     public ProgressionTerminalScreen(ProgressionTerminalMenu menu, Inventory playerInventory, Component title) {
-        super((AbstractContainerMenu)menu, playerInventory, title, 176, 222);
+        super(menu, playerInventory, title, 176, 222);
     }
 
     protected void init() {
@@ -46,7 +29,7 @@ extends AbstractContainerScreen<ProgressionTerminalMenu> {
         this.titleLabelX = (this.imageWidth - this.font.width((FormattedText)this.title)) / 2;
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        this.addRenderableWidget((GuiEventListener)Button.builder((Component)Component.literal((String)"\u25ba Advance Era"), btn -> ExerionNetwork.sendAdvanceEraPacket()).bounds(x + 50, y + 46, 76, 16).build());
+        this.addRenderableWidget(Button.builder(Component.literal("► Advance Era"), btn -> ExerionNetwork.sendAdvanceEraPacket()).bounds(x + 50, y + 46, 76, 16).build());
     }
 
     public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
@@ -74,7 +57,7 @@ extends AbstractContainerScreen<ProgressionTerminalMenu> {
         graphics.text(this.font, this.playerInventoryTitle, 8, this.imageHeight - 94, -12566464, false);
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
-            TechnologyEra era = PlayerEraManager.getPlayerEra((Player)player);
+            TechnologyEra era = PlayerEraManager.getPlayerEra(player);
             MutableComponent eraName = era.getDisplayNameComponent();
             int eraColor = switch (era) {
                 default -> throw new MatchException(null, null);

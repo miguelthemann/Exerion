@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- */
 package net.exerion.block.entity;
 
 import net.exerion.block.ShaftBlock;
@@ -30,16 +20,16 @@ extends BlockEntity {
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide()) {
-            if (((Boolean)state.getValue((Property)ShaftBlock.SPINNING)).booleanValue()) {
+            if (((Boolean)state.getValue(ShaftBlock.SPINNING)).booleanValue()) {
                 this.visualRotationAngle = (float)level.getGameTime() * 4.0f % 360.0f;
             }
             return;
         }
         if (level.getGameTime() % 10L == 0L) {
             boolean anySourceActive = MechanicalNetwork.hasActiveSource(level, pos);
-            boolean currentSpin = (Boolean)state.getValue((Property)ShaftBlock.SPINNING);
+            boolean currentSpin = (Boolean)state.getValue(ShaftBlock.SPINNING);
             if (currentSpin != anySourceActive) {
-                level.setBlock(pos, (BlockState)state.setValue((Property)ShaftBlock.SPINNING, (Comparable)Boolean.valueOf(anySourceActive)), 3);
+                level.setBlock(pos, (BlockState)state.setValue(ShaftBlock.SPINNING, anySourceActive), 3);
             }
         }
     }

@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder
- *  net.minecraft.core.Registry
- *  net.minecraft.core.registries.BuiltInRegistries
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.Identifier
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntityType
- */
 package net.exerion.block.entity;
 
 import net.exerion.Exerion;
@@ -78,51 +65,51 @@ public class ModBlockEntityTypes {
 
     static {
         ResourceKey coalBoilerKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"coal_boiler"));
-        COAL_BOILER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)coalBoilerKey, (Object)FabricBlockEntityTypeBuilder.create(CoalBoilerBlockEntity::new, (Block[])new Block[]{ModBlocks.COAL_BOILER}).build());
+        COAL_BOILER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)coalBoilerKey, FabricBlockEntityTypeBuilder.create(CoalBoilerBlockEntity::new, (Block[])new Block[]{ModBlocks.COAL_BOILER}).build());
         ResourceKey terminalKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"progression_terminal"));
-        PROGRESSION_TERMINAL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)terminalKey, (Object)FabricBlockEntityTypeBuilder.create(ProgressionTerminalBlockEntity::new, (Block[])new Block[]{ModBlocks.PROGRESSION_TERMINAL}).build());
+        PROGRESSION_TERMINAL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)terminalKey, FabricBlockEntityTypeBuilder.create(ProgressionTerminalBlockEntity::new, (Block[])new Block[]{ModBlocks.PROGRESSION_TERMINAL}).build());
         ResourceKey steamTurbineKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"steam_turbine"));
-        STEAM_TURBINE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)steamTurbineKey, (Object)FabricBlockEntityTypeBuilder.create(SteamTurbineBlockEntity::new, (Block[])new Block[]{ModBlocks.STEAM_TURBINE}).build());
+        STEAM_TURBINE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)steamTurbineKey, FabricBlockEntityTypeBuilder.create(SteamTurbineBlockEntity::new, (Block[])new Block[]{ModBlocks.STEAM_TURBINE}).build());
         ResourceKey crusherKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"crusher"));
-        CRUSHER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)crusherKey, (Object)FabricBlockEntityTypeBuilder.create(CrusherBlockEntity::new, (Block[])new Block[]{ModBlocks.CRUSHER}).build());
+        CRUSHER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)crusherKey, FabricBlockEntityTypeBuilder.create(CrusherBlockEntity::new, (Block[])new Block[]{ModBlocks.CRUSHER}).build());
         ResourceKey gearPressKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"gear_press"));
-        GEAR_PRESS_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)gearPressKey, (Object)FabricBlockEntityTypeBuilder.create(GearPressBlockEntity::new, (Block[])new Block[]{ModBlocks.GEAR_PRESS}).build());
+        GEAR_PRESS_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)gearPressKey, FabricBlockEntityTypeBuilder.create(GearPressBlockEntity::new, (Block[])new Block[]{ModBlocks.GEAR_PRESS}).build());
         ResourceKey electricGeneratorKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"electric_generator"));
-        ELECTRIC_GENERATOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricGeneratorKey, (Object)FabricBlockEntityTypeBuilder.create(ElectricGeneratorBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_GENERATOR}).build());
+        ELECTRIC_GENERATOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricGeneratorKey, FabricBlockEntityTypeBuilder.create(ElectricGeneratorBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_GENERATOR}).build());
         ResourceKey cableKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"cable"));
-        CABLE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)cableKey, (Object)FabricBlockEntityTypeBuilder.create(CableBlockEntity::new, (Block[])new Block[]{ModBlocks.COPPER_CABLE, ModBlocks.STEEL_CABLE, ModBlocks.EXERION_CABLE}).build());
+        CABLE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)cableKey, FabricBlockEntityTypeBuilder.create(CableBlockEntity::new, (Block[])new Block[]{ModBlocks.COPPER_CABLE, ModBlocks.STEEL_CABLE, ModBlocks.EXERION_CABLE}).build());
         ResourceKey electricCrusherKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"electric_crusher"));
-        ELECTRIC_CRUSHER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricCrusherKey, (Object)FabricBlockEntityTypeBuilder.create(ElectricCrusherBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_CRUSHER}).build());
+        ELECTRIC_CRUSHER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricCrusherKey, FabricBlockEntityTypeBuilder.create(ElectricCrusherBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_CRUSHER}).build());
         ResourceKey solarPanelKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"solar_panel"));
-        SOLAR_PANEL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)solarPanelKey, (Object)FabricBlockEntityTypeBuilder.create(SolarPanelBlockEntity::new, (Block[])new Block[]{ModBlocks.COPPER_SOLAR_PANEL, ModBlocks.STEEL_SOLAR_PANEL, ModBlocks.EXERION_SOLAR_PANEL}).build());
+        SOLAR_PANEL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)solarPanelKey, FabricBlockEntityTypeBuilder.create(SolarPanelBlockEntity::new, (Block[])new Block[]{ModBlocks.COPPER_SOLAR_PANEL, ModBlocks.STEEL_SOLAR_PANEL, ModBlocks.EXERION_SOLAR_PANEL}).build());
         ResourceKey digitalStorageTerminalKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"digital_storage_terminal"));
-        DIGITAL_STORAGE_TERMINAL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)digitalStorageTerminalKey, (Object)FabricBlockEntityTypeBuilder.create(DigitalStorageTerminalBlockEntity::new, (Block[])new Block[]{ModBlocks.DIGITAL_STORAGE_TERMINAL}).build());
+        DIGITAL_STORAGE_TERMINAL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)digitalStorageTerminalKey, FabricBlockEntityTypeBuilder.create(DigitalStorageTerminalBlockEntity::new, (Block[])new Block[]{ModBlocks.DIGITAL_STORAGE_TERMINAL}).build());
         ResourceKey batboxKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"batbox"));
-        BATBOX_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)batboxKey, (Object)FabricBlockEntityTypeBuilder.create(BatBoxBlockEntity::new, (Block[])new Block[]{ModBlocks.BATBOX}).build());
+        BATBOX_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)batboxKey, FabricBlockEntityTypeBuilder.create(BatBoxBlockEntity::new, (Block[])new Block[]{ModBlocks.BATBOX}).build());
         ResourceKey compressorKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"compressor"));
-        COMPRESSOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)compressorKey, (Object)FabricBlockEntityTypeBuilder.create(CompressorBlockEntity::new, (Block[])new Block[]{ModBlocks.COMPRESSOR}).build());
+        COMPRESSOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)compressorKey, FabricBlockEntityTypeBuilder.create(CompressorBlockEntity::new, (Block[])new Block[]{ModBlocks.COMPRESSOR}).build());
         ResourceKey alloySmelterKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"alloy_smelter"));
-        ALLOY_SMELTER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)alloySmelterKey, (Object)FabricBlockEntityTypeBuilder.create(AlloySmelterBlockEntity::new, (Block[])new Block[]{ModBlocks.ALLOY_SMELTER}).build());
+        ALLOY_SMELTER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)alloySmelterKey, FabricBlockEntityTypeBuilder.create(AlloySmelterBlockEntity::new, (Block[])new Block[]{ModBlocks.ALLOY_SMELTER}).build());
         ResourceKey frequencyEnderChestKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"frequency_ender_chest"));
-        FREQUENCY_ENDER_CHEST_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)frequencyEnderChestKey, (Object)FabricBlockEntityTypeBuilder.create(FrequencyEnderChestBlockEntity::new, (Block[])new Block[]{ModBlocks.FREQUENCY_ENDER_CHEST}).build());
+        FREQUENCY_ENDER_CHEST_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)frequencyEnderChestKey, FabricBlockEntityTypeBuilder.create(FrequencyEnderChestBlockEntity::new, (Block[])new Block[]{ModBlocks.FREQUENCY_ENDER_CHEST}).build());
         ResourceKey frequencyEnderTankKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"frequency_ender_tank"));
-        FREQUENCY_ENDER_TANK_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)frequencyEnderTankKey, (Object)FabricBlockEntityTypeBuilder.create(FrequencyEnderTankBlockEntity::new, (Block[])new Block[]{ModBlocks.FREQUENCY_ENDER_TANK}).build());
+        FREQUENCY_ENDER_TANK_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)frequencyEnderTankKey, FabricBlockEntityTypeBuilder.create(FrequencyEnderTankBlockEntity::new, (Block[])new Block[]{ModBlocks.FREQUENCY_ENDER_TANK}).build());
         ResourceKey miningLaserKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"mining_laser"));
-        MINING_LASER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)miningLaserKey, (Object)FabricBlockEntityTypeBuilder.create(MiningLaserBlockEntity::new, (Block[])new Block[]{ModBlocks.MINING_LASER}).build());
+        MINING_LASER_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)miningLaserKey, FabricBlockEntityTypeBuilder.create(MiningLaserBlockEntity::new, (Block[])new Block[]{ModBlocks.MINING_LASER}).build());
         ResourceKey geothermalGeneratorKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"geothermal_generator"));
-        GEOTHERMAL_GENERATOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)geothermalGeneratorKey, (Object)FabricBlockEntityTypeBuilder.create(GeothermalGeneratorBlockEntity::new, (Block[])new Block[]{ModBlocks.GEOTHERMAL_GENERATOR}).build());
+        GEOTHERMAL_GENERATOR_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)geothermalGeneratorKey, FabricBlockEntityTypeBuilder.create(GeothermalGeneratorBlockEntity::new, (Block[])new Block[]{ModBlocks.GEOTHERMAL_GENERATOR}).build());
         ResourceKey electricFurnaceKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"electric_furnace"));
-        ELECTRIC_FURNACE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricFurnaceKey, (Object)FabricBlockEntityTypeBuilder.create(ElectricFurnaceBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_FURNACE}).build());
+        ELECTRIC_FURNACE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)electricFurnaceKey, FabricBlockEntityTypeBuilder.create(ElectricFurnaceBlockEntity::new, (Block[])new Block[]{ModBlocks.ELECTRIC_FURNACE}).build());
         ResourceKey shaftKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"shaft"));
-        SHAFT_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)shaftKey, (Object)FabricBlockEntityTypeBuilder.create(ShaftBlockEntity::new, (Block[])new Block[]{ModBlocks.SHAFT}).build());
+        SHAFT_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)shaftKey, FabricBlockEntityTypeBuilder.create(ShaftBlockEntity::new, (Block[])new Block[]{ModBlocks.SHAFT}).build());
         ResourceKey handCrankKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"hand_crank"));
-        HAND_CRANK_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)handCrankKey, (Object)FabricBlockEntityTypeBuilder.create(HandCrankBlockEntity::new, (Block[])new Block[]{ModBlocks.HAND_CRANK}).build());
+        HAND_CRANK_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)handCrankKey, FabricBlockEntityTypeBuilder.create(HandCrankBlockEntity::new, (Block[])new Block[]{ModBlocks.HAND_CRANK}).build());
         ResourceKey waterWheelKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"water_wheel"));
-        WATER_WHEEL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)waterWheelKey, (Object)FabricBlockEntityTypeBuilder.create(WaterWheelBlockEntity::new, (Block[])new Block[]{ModBlocks.WATER_WHEEL}).build());
+        WATER_WHEEL_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)waterWheelKey, FabricBlockEntityTypeBuilder.create(WaterWheelBlockEntity::new, (Block[])new Block[]{ModBlocks.WATER_WHEEL}).build());
         ResourceKey mechanicalChuteKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"mechanical_chute"));
-        MECHANICAL_CHUTE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)mechanicalChuteKey, (Object)FabricBlockEntityTypeBuilder.create(MechanicalChuteBlockEntity::new, (Block[])new Block[]{ModBlocks.MECHANICAL_CHUTE}).build());
+        MECHANICAL_CHUTE_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)mechanicalChuteKey, FabricBlockEntityTypeBuilder.create(MechanicalChuteBlockEntity::new, (Block[])new Block[]{ModBlocks.MECHANICAL_CHUTE}).build());
         ResourceKey pumpKey = ResourceKey.create((ResourceKey)Registries.BLOCK_ENTITY_TYPE, (Identifier)Identifier.fromNamespaceAndPath((String)"exerion", (String)"pump"));
-        PUMP_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)pumpKey, (Object)FabricBlockEntityTypeBuilder.create(PumpBlockEntity::new, (Block[])new Block[]{ModBlocks.PUMP}).build());
+        PUMP_ENTITY = (BlockEntityType)Registry.register((Registry)BuiltInRegistries.BLOCK_ENTITY_TYPE, (ResourceKey)pumpKey, FabricBlockEntityTypeBuilder.create(PumpBlockEntity::new, (Block[])new Block[]{ModBlocks.PUMP}).build());
     }
 }
 

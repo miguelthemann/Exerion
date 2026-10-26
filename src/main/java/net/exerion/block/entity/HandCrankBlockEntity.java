@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- */
 package net.exerion.block.entity;
 
 import net.exerion.block.HandCrankBlock;
@@ -70,13 +58,7 @@ implements IFMSource {
     @Override
     public int getOutputFM() {
         if (this.isBurstMode) {
-            if (this.fmBuffer <= 0) {
-                return 0;
-            }
-            int output = Math.min(8, this.fmBuffer);
-            this.fmBuffer -= output;
-            this.setChanged();
-            return output;
+            return this.fmBuffer > 0 ? OUTPUT_RATE : 0;
         }
         if (this.level != null && this.level.getGameTime() - this.lastCrankTime <= 2L) {
             return 12;
@@ -94,7 +76,7 @@ implements IFMSource {
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide()) {
-            if (((Boolean)state.getValue((Property)HandCrankBlock.CRANKING)).booleanValue()) {
+            if (((Boolean)state.getValue(HandCrankBlock.CRANKING)).booleanValue()) {
                 this.visualRotationAngle = (float)level.getGameTime() * 4.0f % 360.0f;
             }
             return;
@@ -104,9 +86,9 @@ implements IFMSource {
             this.setChanged();
         }
         boolean isGenerating = this.isBurstMode ? this.fmBuffer > 0 : level.getGameTime() - this.lastCrankTime <= 2L;
-        boolean wasCranking = (Boolean)state.getValue((Property)HandCrankBlock.CRANKING);
+        boolean wasCranking = (Boolean)state.getValue(HandCrankBlock.CRANKING);
         if (wasCranking != isGenerating) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)HandCrankBlock.CRANKING, (Comparable)Boolean.valueOf(isGenerating)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(HandCrankBlock.CRANKING, isGenerating), 3);
         }
     }
 

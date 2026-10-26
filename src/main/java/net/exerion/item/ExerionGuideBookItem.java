@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.InteractionHand
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.level.Level
- */
 package net.exerion.item;
 
 import net.exerion.item.ClientOnly;

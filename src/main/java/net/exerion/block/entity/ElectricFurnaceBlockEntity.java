@@ -1,33 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.BlockStateProperties
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.item.ModItems;
@@ -59,38 +31,26 @@ public class ElectricFurnaceBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 2){
-        final /* synthetic */ ElectricFurnaceBlockEntity this$0;
-        {
-            ElectricFurnaceBlockEntity electricFurnaceBlockEntity = this$0;
-            Objects.requireNonNull(electricFurnaceBlockEntity);
-            this.this$0 = electricFurnaceBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(2) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            ElectricFurnaceBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
     private final int maxEnergy = 4000;
     private int progress = 0;
     private final int maxProgress = 100;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ ElectricFurnaceBlockEntity this$0;
-        {
-            ElectricFurnaceBlockEntity electricFurnaceBlockEntity = this$0;
-            Objects.requireNonNull(electricFurnaceBlockEntity);
-            this.this$0 = electricFurnaceBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
-                case 2 -> this.this$0.progress;
-                case 3 -> this.this$0.maxProgress;
+                case 0 -> ElectricFurnaceBlockEntity.this.energy;
+                case 1 -> ElectricFurnaceBlockEntity.this.maxEnergy;
+                case 2 -> ElectricFurnaceBlockEntity.this.progress;
+                case 3 -> ElectricFurnaceBlockEntity.this.maxProgress;
                 default -> 0;
             };
         }
@@ -98,11 +58,11 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    ElectricFurnaceBlockEntity.this.energy = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.progress = value;
+                    ElectricFurnaceBlockEntity.this.progress = value;
                 }
             }
         }
@@ -167,8 +127,8 @@ IEnergyStorage {
             this.setChanged();
         }
         boolean bl = isWorking = this.progress > 0;
-        if (state.hasProperty((Property)BlockStateProperties.LIT) && (Boolean)state.getValue((Property)BlockStateProperties.LIT) != isWorking) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)BlockStateProperties.LIT, (Comparable)Boolean.valueOf(isWorking)), 3);
+        if (state.hasProperty(BlockStateProperties.LIT) && (Boolean)state.getValue(BlockStateProperties.LIT) != isWorking) {
+            level.setBlock(pos, (BlockState)state.setValue(BlockStateProperties.LIT, isWorking), 3);
         }
     }
 
@@ -183,23 +143,23 @@ IEnergyStorage {
         if (outputSlot.isEmpty()) {
             return true;
         }
-        return outputSlot.is((Object)result.getItem()) && outputSlot.getCount() + result.getCount() <= outputSlot.getMaxStackSize();
+        return outputSlot.is(result.getItem()) && outputSlot.getCount() + result.getCount() <= outputSlot.getMaxStackSize();
     }
 
     private ItemStack getRecipeResult(ItemStack input, Level level) {
-        if (input.is((Object)ModItems.IRON_DUST)) {
+        if (input.is(ModItems.IRON_DUST)) {
             return new ItemStack((ItemLike)Items.IRON_INGOT);
         }
-        if (input.is((Object)ModItems.COPPER_DUST)) {
+        if (input.is(ModItems.COPPER_DUST)) {
             return new ItemStack((ItemLike)Items.COPPER_INGOT);
         }
-        if (input.is((Object)ModItems.RAW_EXERION)) {
+        if (input.is(ModItems.RAW_EXERION)) {
             return new ItemStack((ItemLike)ModItems.EXERION_INGOT);
         }
-        if (input.is((Object)Items.RAW_IRON)) {
+        if (input.is(Items.RAW_IRON)) {
             return new ItemStack((ItemLike)Items.IRON_INGOT);
         }
-        if (input.is((Object)Items.RAW_COPPER)) {
+        if (input.is(Items.RAW_COPPER)) {
             return new ItemStack((ItemLike)Items.COPPER_INGOT);
         }
         return ItemStack.EMPTY;
@@ -253,7 +213,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

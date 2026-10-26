@@ -1,18 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  mezz.jei.api.IModPlugin
- *  mezz.jei.api.JeiPlugin
- *  mezz.jei.api.recipe.category.IRecipeCategory
- *  mezz.jei.api.recipe.types.IRecipeType
- *  mezz.jei.api.registration.IRecipeCatalystRegistration
- *  mezz.jei.api.registration.IRecipeCategoryRegistration
- *  mezz.jei.api.registration.IRecipeRegistration
- *  net.minecraft.resources.Identifier
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.ItemLike
- */
 package net.exerion.compat.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -45,8 +30,8 @@ implements IModPlugin {
     }
 
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack((ItemLike)ModBlocks.CRUSHER), new IRecipeType[]{CrusherRecipeCategory.TYPE});
-        registration.addRecipeCatalyst(new ItemStack((ItemLike)ModBlocks.ELECTRIC_CRUSHER), new IRecipeType[]{CrusherRecipeCategory.TYPE});
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.CRUSHER), new IRecipeType[]{CrusherRecipeCategory.TYPE});
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_CRUSHER), new IRecipeType[]{CrusherRecipeCategory.TYPE});
     }
 }
 

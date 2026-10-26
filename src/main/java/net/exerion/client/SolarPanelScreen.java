@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.client.gui.GuiGraphicsExtractor
- *  net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.inventory.AbstractContainerMenu
- */
 package net.exerion.client;
 
 import java.util.List;
@@ -22,7 +12,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public class SolarPanelScreen
 extends AbstractContainerScreen<SolarPanelMenu> {
     public SolarPanelScreen(SolarPanelMenu menu, Inventory playerInventory, Component title) {
-        super((AbstractContainerMenu)menu, playerInventory, title, 176, 166);
+        super(menu, playerInventory, title, 176, 166);
         this.titleLabelX = 8;
         this.titleLabelY = 4;
     }

@@ -1,26 +1,16 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- */
 package net.exerion.block.entity;
 
-import net.exerion.block.entity.GeothermalGeneratorBlockEntity;
-import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.fluid.GlobalFluidNetwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class FrequencyEnderTankBlockEntity
-extends BlockEntity {
+public class FrequencyEnderTankBlockEntity extends BlockEntity {
+    private static final Direction[] DIRECTIONS = Direction.values();
     private String frequency = "DEFAULT";
     private int extractCooldown = 0;
 
@@ -47,18 +37,36 @@ extends BlockEntity {
         }
         int currentLava = GlobalFluidNetwork.getLavaAmount(this.frequency);
         if (currentLava > 0) {
-            for (Direction dir : Direction.values()) {
-                int amountToPush;
-                int extracted;
-                GeothermalGeneratorBlockEntity geoGenerator;
-                int space;
+            for (Direction dir : DIRECTIONS) {
                 BlockEntity neighbor = level.getBlockEntity(pos.relative(dir));
-                if (!(neighbor instanceof GeothermalGeneratorBlockEntity) || (space = (geoGenerator = (GeothermalGeneratorBlockEntity)neighbor).getMaxLavaBuffer() - geoGenerator.getLavaBuffer()) <= 0 || (extracted = GlobalFluidNetwork.extractLava(this.frequency, amountToPush = Math.min(space, Math.min(100, currentLava)))) <= 0) continue;
-                geoGenerator.setLavaBuffer(geoGenerator.getLavaBuffer() + extracted);
-                this.extractCooldown = 5;
-                break;
+                if (neighbor instanceof GeothermalGeneratorBlockEntity geoGenerator) {
+                    int space = geoGenerator.getMaxLavaBuffer() - geoGenerator.getLavaBuffer();
+                    if (space <= 0) {
+                        continue;
+                    }
+                    int amountToPush = Math.min(space, Math.min(100, currentLava));
+                    int extracted = GlobalFluidNetwork.extractLava(this.frequency, amountToPush);
+                    if (extracted > 0) {
+                        geoGenerator.setLavaBuffer(geoGenerator.getLavaBuffer() + extracted);
+                        this.extractCooldown = 5;
+                        break;
+                    }
+                }
             }
         }
     }
-}
 
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putString("Frequency", this.frequency);
+        output.putInt("ExtractCooldown", this.extractCooldown);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.frequency = input.getStringOr("Frequency", "DEFAULT");
+        this.extractCooldown = input.getIntOr("ExtractCooldown", 0);
+    }
+}

@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- */
 package net.exerion.block.entity;
 
 import net.exerion.block.CableBlock;
@@ -28,6 +15,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class CableBlockEntity
 extends BlockEntity
 implements IEnergyStorage {
+    private static final Direction[] DIRECTIONS = Direction.values();
     private int energy = 0;
 
     public CableBlockEntity(BlockPos pos, BlockState state) {
@@ -78,7 +66,7 @@ implements IEnergyStorage {
             return;
         }
         int transferRate = this.getTransferRate();
-        for (Direction dir : Direction.values()) {
+        for (Direction dir : DIRECTIONS) {
             if (this.energy <= 0) break;
             BlockEntity be = level.getBlockEntity(pos.relative(dir));
             if (!(be instanceof IEnergyStorage)) continue;

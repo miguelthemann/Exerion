@@ -1,36 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.Item
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.CrusherBlock;
 import net.exerion.block.ModBlocks;
 import net.exerion.block.entity.ModBlockEntityTypes;
@@ -68,33 +37,21 @@ public class CrusherBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IFMConsumer {
-    private final SimpleContainer inventory = new SimpleContainer(this, 3){
-        final /* synthetic */ CrusherBlockEntity this$0;
-        {
-            CrusherBlockEntity crusherBlockEntity = this$0;
-            Objects.requireNonNull(crusherBlockEntity);
-            this.this$0 = crusherBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(3) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            CrusherBlockEntity.this.setChanged();
         }
     };
     private int crushTime = 0;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ CrusherBlockEntity this$0;
-        {
-            CrusherBlockEntity crusherBlockEntity = this$0;
-            Objects.requireNonNull(crusherBlockEntity);
-            this.this$0 = crusherBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.crushTime;
-                case 1 -> this.this$0.getMaxCrushTime();
+                case 0 -> CrusherBlockEntity.this.crushTime;
+                case 1 -> CrusherBlockEntity.this.getMaxCrushTime();
                 default -> 0;
             };
         }
@@ -102,7 +59,7 @@ IFMConsumer {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.crushTime = value;
+                    CrusherBlockEntity.this.crushTime = value;
                 }
             }
         }
@@ -126,7 +83,7 @@ IFMConsumer {
 
     public int getMaxCrushTime() {
         ItemStack upgrade = this.inventory.getItem(2);
-        if (upgrade.is((Object)ModItems.SPEED_UPGRADE)) {
+        if (upgrade.is(ModItems.SPEED_UPGRADE)) {
             return 40;
         }
         return 100;
@@ -141,7 +98,7 @@ IFMConsumer {
         if (level.isClientSide()) {
             return;
         }
-        boolean wasCrushing = (Boolean)state.getValue((Property)CrusherBlock.CRUSHING);
+        boolean wasCrushing = (Boolean)state.getValue(CrusherBlock.CRUSHING);
         boolean isCrushing = false;
         int availableFM = MechanicalNetwork.getAvailableFM(level, pos);
         if (availableFM < this.getRequiredFM()) {
@@ -150,7 +107,7 @@ IFMConsumer {
             }
             this.crushTime = 0;
             if (wasCrushing) {
-                level.setBlock(pos, (BlockState)state.setValue((Property)CrusherBlock.CRUSHING, (Comparable)Boolean.valueOf(false)), 3);
+                level.setBlock(pos, (BlockState)state.setValue(CrusherBlock.CRUSHING, false), 3);
             }
             return;
         }
@@ -184,7 +141,7 @@ IFMConsumer {
             this.crushTime = 0;
         }
         if (wasCrushing != isCrushing) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)CrusherBlock.CRUSHING, (Comparable)Boolean.valueOf(isCrushing)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(CrusherBlock.CRUSHING, isCrushing), 3);
         }
     }
 
@@ -192,25 +149,25 @@ IFMConsumer {
         if (input.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        if (input.is((Object)Items.RAW_IRON)) {
+        if (input.is(Items.RAW_IRON)) {
             return new ItemStack((ItemLike)ModItems.IRON_DUST, 2);
         }
-        if (input.is((Object)Items.RAW_COPPER)) {
+        if (input.is(Items.RAW_COPPER)) {
             return new ItemStack((ItemLike)ModItems.COPPER_DUST, 2);
         }
-        if (input.is((Object)Items.IRON_INGOT)) {
+        if (input.is(Items.IRON_INGOT)) {
             return new ItemStack((ItemLike)ModItems.IRON_DUST);
         }
-        if (input.is((Object)Items.COPPER_INGOT)) {
+        if (input.is(Items.COPPER_INGOT)) {
             return new ItemStack((ItemLike)ModItems.COPPER_DUST);
         }
-        if (input.is((Object)Items.COAL)) {
+        if (input.is(Items.COAL)) {
             return new ItemStack((ItemLike)ModItems.COAL_DUST);
         }
-        if (input.is((Object)Items.IRON_ORE) || input.is((Object)Items.DEEPSLATE_IRON_ORE)) {
+        if (input.is(Items.IRON_ORE) || input.is(Items.DEEPSLATE_IRON_ORE)) {
             return new ItemStack((ItemLike)Items.RAW_IRON, 2);
         }
-        if (input.is((Object)Items.COPPER_ORE) || input.is((Object)Items.DEEPSLATE_COPPER_ORE)) {
+        if (input.is(Items.COPPER_ORE) || input.is(Items.DEEPSLATE_COPPER_ORE)) {
             return new ItemStack((ItemLike)Items.RAW_COPPER, 2);
         }
         if (input.getItem() == Item.byBlock((Block)ModBlocks.EXERION_ORE) || input.getItem() == Item.byBlock((Block)ModBlocks.DEEPSLATE_EXERION_ORE)) {
@@ -223,7 +180,7 @@ IFMConsumer {
         if (outputSlot.isEmpty()) {
             return true;
         }
-        if (!outputSlot.is((Object)result.getItem())) {
+        if (!outputSlot.is(result.getItem())) {
             return false;
         }
         return outputSlot.getCount() + result.getCount() <= outputSlot.getMaxStackSize();
@@ -262,7 +219,7 @@ IFMConsumer {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

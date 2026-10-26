@@ -1,30 +1,5 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.network.chat.Component
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.BatBoxBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
@@ -54,35 +29,23 @@ public class BatBoxBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 2){
-        final /* synthetic */ BatBoxBlockEntity this$0;
-        {
-            BatBoxBlockEntity batBoxBlockEntity = this$0;
-            Objects.requireNonNull(batBoxBlockEntity);
-            this.this$0 = batBoxBlockEntity;
-            super(arg0);
-        }
-
+    private final SimpleContainer inventory = new SimpleContainer(2) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            BatBoxBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
     private final int maxEnergy = 10000;
     private final int transferRate = 32;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ BatBoxBlockEntity this$0;
-        {
-            BatBoxBlockEntity batBoxBlockEntity = this$0;
-            Objects.requireNonNull(batBoxBlockEntity);
-            this.this$0 = batBoxBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.energy;
-                case 1 -> this.this$0.maxEnergy;
+                case 0 -> BatBoxBlockEntity.this.energy;
+                case 1 -> BatBoxBlockEntity.this.maxEnergy;
                 default -> 0;
             };
         }
@@ -90,7 +53,7 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.energy = value;
+                    BatBoxBlockEntity.this.energy = value;
                 }
             }
         }
@@ -135,13 +98,13 @@ IEnergyStorage {
             return;
         }
         ItemStack dischargeSlot = this.inventory.getItem(1);
-        if (this.energy <= 9750 && !dischargeSlot.isEmpty() && dischargeSlot.is((Object)ModItems.STEAM_CRYSTAL)) {
+        if (this.energy <= 9750 && !dischargeSlot.isEmpty() && dischargeSlot.is(ModItems.STEAM_CRYSTAL)) {
             dischargeSlot.shrink(1);
             this.energy += 250;
             this.setChanged();
         }
         ItemStack chargeSlot = this.inventory.getItem(0);
-        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is((Object)ModItems.ERA_SCANNER) || chargeSlot.is((Object)ModItems.STEAM_BOOTS) || chargeSlot.is((Object)ModItems.ELECTRIC_PLATE) || chargeSlot.is((Object)ModItems.LOGIC_HELMET) || chargeSlot.is((Object)ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is((Object)ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
+        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is(ModItems.ERA_SCANNER) || chargeSlot.is(ModItems.STEAM_BOOTS) || chargeSlot.is(ModItems.ELECTRIC_PLATE) || chargeSlot.is(ModItems.LOGIC_HELMET) || chargeSlot.is(ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is(ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
             int chargeAmount = Math.min(damage, 32);
             chargeSlot.setDamageValue(damage - chargeAmount);
             this.energy -= chargeAmount;
@@ -186,7 +149,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 

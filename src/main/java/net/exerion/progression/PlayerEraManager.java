@@ -1,18 +1,6 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.ChatFormatting
- *  net.minecraft.advancements.AdvancementHolder
- *  net.minecraft.advancements.AdvancementProgress
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.chat.MutableComponent
- *  net.minecraft.resources.Identifier
- *  net.minecraft.server.level.ServerPlayer
- *  net.minecraft.world.entity.player.Player
- */
 package net.exerion.progression;
 
+import net.exerion.network.ExerionNetwork;
 import net.exerion.progression.ModAttachments;
 import net.exerion.progression.TechnologyEra;
 import net.minecraft.ChatFormatting;
@@ -30,17 +18,18 @@ public class PlayerEraManager {
             return TechnologyEra.COSMIC;
         }
         if (player.hasAttached(ModAttachments.PLAYER_ERA)) {
-            return (TechnologyEra)((Object)player.getAttached(ModAttachments.PLAYER_ERA));
+            return player.getAttached(ModAttachments.PLAYER_ERA);
         }
         return TechnologyEra.STONE;
     }
 
     public static void setPlayerEra(ServerPlayer player, TechnologyEra era) {
-        player.setAttached(ModAttachments.PLAYER_ERA, (Object)era);
-        MutableComponent message = Component.translatable((String)"message.exerion.era_unlocked", (Object[])new Object[]{era.getDisplayNameComponent()}).withStyle(ChatFormatting.GREEN);
-        player.sendSystemMessage((Component)message);
+        player.setAttached(ModAttachments.PLAYER_ERA, era);
+        ExerionNetwork.syncEraToClient(player, era);
+        MutableComponent message = Component.translatable("message.exerion.era_unlocked", era.getDisplayNameComponent()).withStyle(ChatFormatting.GREEN);
+        player.sendSystemMessage(message);
         String eraName = era.name().toLowerCase();
-        Identifier advId = Identifier.fromNamespaceAndPath((String)"exerion", (String)("era/" + eraName));
+        Identifier advId = Identifier.fromNamespaceAndPath("exerion", "era/" + eraName);
         AdvancementHolder adv = player.level().getServer().getAdvancements().get(advId);
         if (adv != null) {
             AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);

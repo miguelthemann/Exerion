@@ -1,40 +1,12 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.network.chat.Component
- *  net.minecraft.sounds.SoundEvents
- *  net.minecraft.sounds.SoundSource
- *  net.minecraft.world.Container
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.SimpleContainer
- *  net.minecraft.world.entity.Entity
- *  net.minecraft.world.entity.item.ItemEntity
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.level.block.state.properties.Property
- *  net.minecraft.world.level.storage.ValueInput
- *  net.minecraft.world.level.storage.ValueOutput
- *  org.jetbrains.annotations.Nullable
- */
 package net.exerion.block.entity;
 
-import java.util.Objects;
 import net.exerion.block.ElectricGeneratorBlock;
 import net.exerion.block.entity.ModBlockEntityTypes;
 import net.exerion.energy.IEnergyStorage;
 import net.exerion.item.ModItems;
 import net.exerion.menu.ElectricGeneratorMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -62,18 +34,12 @@ public class ElectricGeneratorBlockEntity
 extends BlockEntity
 implements MenuProvider,
 IEnergyStorage {
-    private final SimpleContainer inventory = new SimpleContainer(this, 2){
-        final /* synthetic */ ElectricGeneratorBlockEntity this$0;
-        {
-            ElectricGeneratorBlockEntity electricGeneratorBlockEntity = this$0;
-            Objects.requireNonNull(electricGeneratorBlockEntity);
-            this.this$0 = electricGeneratorBlockEntity;
-            super(arg0);
-        }
-
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private final SimpleContainer inventory = new SimpleContainer(2) {
+        @Override
         public void setChanged() {
             super.setChanged();
-            this.this$0.setChanged();
+            ElectricGeneratorBlockEntity.this.setChanged();
         }
     };
     private int energy = 0;
@@ -81,20 +47,15 @@ IEnergyStorage {
     private int burnTime = 0;
     private int maxBurnTime = 0;
     private int generationRate = 0;
-    protected final ContainerData dataAccess = new ContainerData(this){
-        final /* synthetic */ ElectricGeneratorBlockEntity this$0;
-        {
-            ElectricGeneratorBlockEntity electricGeneratorBlockEntity = this$0;
-            Objects.requireNonNull(electricGeneratorBlockEntity);
-            this.this$0 = electricGeneratorBlockEntity;
-        }
+    protected final ContainerData dataAccess = new ContainerData() {
+        
 
         public int get(int index) {
             return switch (index) {
-                case 0 -> this.this$0.burnTime;
-                case 1 -> this.this$0.maxBurnTime;
-                case 2 -> this.this$0.energy;
-                case 3 -> this.this$0.maxEnergy;
+                case 0 -> ElectricGeneratorBlockEntity.this.burnTime;
+                case 1 -> ElectricGeneratorBlockEntity.this.maxBurnTime;
+                case 2 -> ElectricGeneratorBlockEntity.this.energy;
+                case 3 -> ElectricGeneratorBlockEntity.this.maxEnergy;
                 default -> 0;
             };
         }
@@ -102,15 +63,15 @@ IEnergyStorage {
         public void set(int index, int value) {
             switch (index) {
                 case 0: {
-                    this.this$0.burnTime = value;
+                    ElectricGeneratorBlockEntity.this.burnTime = value;
                     break;
                 }
                 case 1: {
-                    this.this$0.maxBurnTime = value;
+                    ElectricGeneratorBlockEntity.this.maxBurnTime = value;
                     break;
                 }
                 case 2: {
-                    this.this$0.energy = value;
+                    ElectricGeneratorBlockEntity.this.energy = value;
                 }
             }
         }
@@ -158,7 +119,7 @@ IEnergyStorage {
         if (level.isClientSide()) {
             return;
         }
-        boolean wasGenerating = (Boolean)state.getValue((Property)ElectricGeneratorBlock.GENERATING);
+        boolean wasGenerating = (Boolean)state.getValue(ElectricGeneratorBlock.GENERATING);
         boolean isGenerating = false;
         if (this.burnTime > 0) {
             --this.burnTime;
@@ -169,25 +130,25 @@ IEnergyStorage {
             this.setChanged();
         }
         if (this.burnTime == 0 && this.energy < 10000 && !(fuelSlot = this.inventory.getItem(0)).isEmpty()) {
-            if (fuelSlot.is((Object)Items.COAL) || fuelSlot.is((Object)Items.CHARCOAL)) {
+            if (fuelSlot.is(Items.COAL) || fuelSlot.is(Items.CHARCOAL)) {
                 this.burnTime = 100;
                 this.maxBurnTime = 100;
                 this.generationRate = 10;
                 fuelSlot.shrink(1);
                 this.setChanged();
-            } else if (fuelSlot.is((Object)Items.COAL_BLOCK)) {
+            } else if (fuelSlot.is(Items.COAL_BLOCK)) {
                 this.burnTime = 900;
                 this.maxBurnTime = 900;
                 this.generationRate = 12;
                 fuelSlot.shrink(1);
                 this.setChanged();
-            } else if (fuelSlot.is((Object)ModItems.STEAM_CRYSTAL)) {
+            } else if (fuelSlot.is(ModItems.STEAM_CRYSTAL)) {
                 this.burnTime = 200;
                 this.maxBurnTime = 200;
                 this.generationRate = 20;
                 fuelSlot.shrink(1);
                 this.setChanged();
-            } else if (fuelSlot.is((Object)Items.LAVA_BUCKET)) {
+            } else if (fuelSlot.is(Items.LAVA_BUCKET)) {
                 this.burnTime = 400;
                 this.maxBurnTime = 400;
                 this.generationRate = 20;
@@ -196,7 +157,7 @@ IEnergyStorage {
             }
         }
         ItemStack chargeSlot = this.inventory.getItem(1);
-        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is((Object)ModItems.ERA_SCANNER) || chargeSlot.is((Object)ModItems.STEAM_BOOTS) || chargeSlot.is((Object)ModItems.ELECTRIC_PLATE) || chargeSlot.is((Object)ModItems.LOGIC_HELMET) || chargeSlot.is((Object)ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is((Object)ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
+        if (this.energy > 0 && !chargeSlot.isEmpty() && (chargeSlot.is(ModItems.ERA_SCANNER) || chargeSlot.is(ModItems.STEAM_BOOTS) || chargeSlot.is(ModItems.ELECTRIC_PLATE) || chargeSlot.is(ModItems.LOGIC_HELMET) || chargeSlot.is(ModItems.ELECTRIC_MINING_DRILL) || chargeSlot.is(ModItems.PLASMA_SWORD)) && (damage = chargeSlot.getDamageValue()) > 0) {
             int chargeAmount = Math.min(damage, 2);
             chargeSlot.setDamageValue(damage - chargeAmount);
             this.energy -= chargeAmount;
@@ -205,8 +166,28 @@ IEnergyStorage {
                 level.playSound(null, pos, SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.BLOCKS, 0.4f, 1.2f);
             }
         }
+        if (this.energy > 0) {
+            this.pushEnergy(level, pos);
+        }
         if (wasGenerating != isGenerating) {
-            level.setBlock(pos, (BlockState)state.setValue((Property)ElectricGeneratorBlock.GENERATING, (Comparable)Boolean.valueOf(isGenerating)), 3);
+            level.setBlock(pos, (BlockState)state.setValue(ElectricGeneratorBlock.GENERATING, isGenerating), 3);
+        }
+    }
+
+    private void pushEnergy(Level level, BlockPos pos) {
+        int pushAmount = Math.min(this.energy, 32);
+        for (Direction dir : DIRECTIONS) {
+            if (pushAmount <= 0) break;
+            BlockEntity target = level.getBlockEntity(pos.relative(dir));
+            if (!(target instanceof IEnergyStorage targetStorage) || target instanceof ElectricGeneratorBlockEntity) {
+                continue;
+            }
+            int received = targetStorage.receiveEnergy(pushAmount, false);
+            if (received > 0) {
+                this.energy -= received;
+                pushAmount -= received;
+                this.setChanged();
+            }
         }
     }
 
@@ -246,7 +227,7 @@ IEnergyStorage {
         for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
             ItemStack stack = this.inventory.getItem(i);
             if (stack.isEmpty()) continue;
-            invOutput.store("Slot" + i, ItemStack.CODEC, (Object)stack);
+            invOutput.store("Slot" + i, ItemStack.CODEC, stack);
         }
     }
 
