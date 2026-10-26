@@ -1,0 +1,17 @@
+{
+  "parent": "exerion:era/industrial",
+  "display": {
+    "icon": { "item": "exerion:digital_storage_terminal" },
+    "title": { "translate": "era.exerion.digital" },
+    "description": { "translate": "era.exerion.digital.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

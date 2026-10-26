@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SIS",
+    "SSS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "I": "minecraft:iron_block"
+  },
+  "result": {
+    "id": "exerion:steel_casing",
+    "count": 1
+  }
+}

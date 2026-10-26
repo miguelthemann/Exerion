@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "WGW",
+    "WWW"
+  ],
+  "key": {
+    "C": "exerion:copper_cable",
+    "W": "minecraft:oak_planks",
+    "G": "exerion:copper_gear"
+  },
+  "result": {
+    "id": "exerion:batbox",
+    "count": 1
+  }
+}

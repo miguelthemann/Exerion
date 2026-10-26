@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RCR",
+    "CGC",
+    "RCR"
+  ],
+  "key": {
+    "R": "minecraft:redstone",
+    "C": "minecraft:gold_ingot",
+    "G": "exerion:iron_gear"
+  },
+  "result": {
+    "id": "exerion:speed_upgrade",
+    "count": 1
+  }
+}

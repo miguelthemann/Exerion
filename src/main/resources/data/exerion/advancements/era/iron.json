@@ -1,0 +1,17 @@
+{
+  "parent": "exerion:era/copper",
+  "display": {
+    "icon": { "item": "exerion:iron_gear" },
+    "title": { "translate": "era.exerion.iron" },
+    "description": { "translate": "era.exerion.iron.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

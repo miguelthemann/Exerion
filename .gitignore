@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+!releases/*.jar
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Minecraft Run Dirs
+run/
+run-client/
+run-server/
+logs/
+crash-reports/

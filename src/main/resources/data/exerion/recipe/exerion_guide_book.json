@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " BI",
+    "   "
+  ],
+  "key": {
+    "B": "minecraft:book",
+    "I": "exerion:exerion_ingot"
+  },
+  "result": {
+    "id": "exerion:exerion_guide_book",
+    "count": 1
+  }
+}

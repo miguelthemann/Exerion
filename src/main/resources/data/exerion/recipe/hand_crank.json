@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IWI",
+    " W "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "W": "minecraft:oak_log"
+  },
+  "result": {
+    "id": "exerion:hand_crank",
+    "count": 1
+  }
+}

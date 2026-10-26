@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CMC",
+    "SCS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:circuit_board",
+    "M": "exerion:crusher"
+  },
+  "result": {
+    "id": "exerion:electric_crusher",
+    "count": 1
+  }
+}

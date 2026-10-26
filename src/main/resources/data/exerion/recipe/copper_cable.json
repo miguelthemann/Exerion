@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "CCC",
+    "WWW"
+  ],
+  "key": {
+    "W": "minecraft:white_wool",
+    "C": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "exerion:copper_cable",
+    "count": 6
+  }
+}

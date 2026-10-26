@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "exerion:block/frequency_ender_chest_top",
+    "bottom": "exerion:block/frequency_ender_chest_side",
+    "side": "exerion:block/frequency_ender_chest_side",
+    "front": "exerion:block/frequency_ender_chest_front"
+  }
+}

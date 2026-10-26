@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "LSL",
+    " E "
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:circuit_board",
+    "L": "exerion:logic_chip",
+    "E": "exerion:era_scanner"
+  },
+  "result": {
+    "id": "exerion:logic_helmet",
+    "count": 1
+  }
+}

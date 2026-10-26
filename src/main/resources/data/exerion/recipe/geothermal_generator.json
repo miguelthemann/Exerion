@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SOS",
+    "SGS",
+    "SCS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "O": "minecraft:obsidian",
+    "G": "exerion:coal_boiler",
+    "C": "exerion:circuit_board"
+  },
+  "result": {
+    "id": "exerion:geothermal_generator",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "exerion:block/digital_storage_terminal_side",
+    "down": "exerion:block/exerion_casing",
+    "up": "exerion:block/digital_storage_terminal_top",
+    "north": "exerion:block/digital_storage_terminal_front",
+    "south": "exerion:block/digital_storage_terminal_side",
+    "east": "exerion:block/digital_storage_terminal_side",
+    "west": "exerion:block/digital_storage_terminal_side"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "SCS",
+    "PEP"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:circuit_board",
+    "P": "exerion:exerion_plate",
+    "E": "exerion:exerion_core"
+  },
+  "result": {
+    "id": "exerion:electric_plate",
+    "count": 1
+  }
+}

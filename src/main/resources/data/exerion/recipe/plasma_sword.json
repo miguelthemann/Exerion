@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  C",
+    " P ",
+    "R  "
+  ],
+  "key": {
+    "C": "exerion:circuit_board",
+    "P": "exerion:carbon_plate",
+    "R": "exerion:exerion_rod"
+  },
+  "result": {
+    "id": "exerion:plasma_sword",
+    "count": 1
+  }
+}

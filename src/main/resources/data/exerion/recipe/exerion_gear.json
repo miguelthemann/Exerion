@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " E ",
+    "E E",
+    " E "
+  ],
+  "key": {
+    "E": "exerion:exerion_ingot"
+  },
+  "result": {
+    "id": "exerion:exerion_gear",
+    "count": 1
+  }
+}

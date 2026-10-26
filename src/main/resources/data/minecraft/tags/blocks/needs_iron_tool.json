@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "exerion:exerion_ore",
+    "exerion:deepslate_exerion_ore",
+    "exerion:exerion_block",
+    "exerion:raw_exerion_block",
+    "exerion:steel_block",
+    "exerion:progression_terminal",
+    "exerion:electric_generator",
+    "exerion:steel_cable",
+    "exerion:exerion_cable",
+    "exerion:electric_crusher",
+    "exerion:steel_solar_panel",
+    "exerion:exerion_solar_panel"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CGC",
+    "GTG",
+    "CGC"
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "G": "exerion:iron_gear",
+    "T": "exerion:steam_turbine"
+  },
+  "result": {
+    "id": "exerion:electric_generator",
+    "count": 1
+  }
+}

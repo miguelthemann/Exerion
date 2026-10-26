@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=false": { "model": "exerion:block/geothermal_generator" },
+    "lit=true": { "model": "exerion:block/geothermal_generator_active" }
+  }
+}

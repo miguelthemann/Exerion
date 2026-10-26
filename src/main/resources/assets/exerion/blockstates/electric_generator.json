@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "generating=false": { "model": "exerion:block/electric_generator" },
+    "generating=true": { "model": "exerion:block/electric_generator_active" }
+  }
+}

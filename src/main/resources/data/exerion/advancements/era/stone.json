@@ -1,0 +1,20 @@
+{
+  "display": {
+    "icon": { "item": "minecraft:stone_pickaxe" },
+    "title": { "translate": "era.exerion.stone" },
+    "description": { "translate": "era.exerion.stone.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "items": [ "exerion:raw_exerion" ] } ]
+      }
+    }
+  }
+}

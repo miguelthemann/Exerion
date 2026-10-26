@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IWI",
+    "WCW",
+    "IWI"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "W": "minecraft:oak_planks",
+    "C": "minecraft:cobblestone"
+  },
+  "result": {
+    "id": "exerion:water_wheel",
+    "count": 1
+  }
+}

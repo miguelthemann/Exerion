@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "turning=false": { "model": "exerion:block/steam_turbine" },
+    "turning=true": { "model": "exerion:block/steam_turbine_active" }
+  }
+}

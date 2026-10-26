@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "OCO",
+    "SSS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "O": "minecraft:obsidian",
+    "C": "minecraft:ender_pearl"
+  },
+  "result": {
+    "id": "exerion:frequency_ender_chest",
+    "count": 1
+  }
+}

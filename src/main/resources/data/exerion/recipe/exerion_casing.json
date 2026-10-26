@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": "exerion:exerion_plate",
+    "C": "exerion:steel_casing"
+  },
+  "result": {
+    "id": "exerion:exerion_casing",
+    "count": 1
+  }
+}

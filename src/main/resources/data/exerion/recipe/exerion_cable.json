@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "CSC",
+    "EEE"
+  ],
+  "key": {
+    "E": "exerion:exerion_ingot",
+    "C": "exerion:steel_cable",
+    "S": "minecraft:redstone"
+  },
+  "result": {
+    "id": "exerion:exerion_cable",
+    "count": 6
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    " C ",
+    " L "
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "C": "exerion:circuit_board",
+    "L": "exerion:logic_chip"
+  },
+  "result": {
+    "id": "exerion:era_scanner",
+    "count": 1
+  }
+}

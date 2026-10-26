@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SSS"
+  ],
+  "key": {
+    "S": "minecraft:stone",
+    "P": "minecraft:piston"
+  },
+  "result": {
+    "id": "exerion:gear_press",
+    "count": 1
+  }
+}

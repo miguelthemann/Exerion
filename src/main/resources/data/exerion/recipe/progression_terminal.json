@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RCR",
+    "CGC",
+    "RCR"
+  ],
+  "key": {
+    "R": "minecraft:redstone",
+    "C": "minecraft:diamond",
+    "G": "exerion:exerion_core"
+  },
+  "result": {
+    "id": "exerion:progression_terminal",
+    "count": 1
+  }
+}

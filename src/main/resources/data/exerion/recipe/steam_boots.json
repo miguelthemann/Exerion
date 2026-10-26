@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "C C",
+    "S S"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:steam_crystal"
+  },
+  "result": {
+    "id": "exerion:steam_boots",
+    "count": 1
+  }
+}

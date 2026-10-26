@@ -1,0 +1,13 @@
+{
+  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "exerion:block/steel_solar_panel_top",
+    "down": "exerion:block/steel_casing",
+    "up": "exerion:block/steel_solar_panel_top",
+    "north": "exerion:block/steel_casing",
+    "south": "exerion:block/steel_casing",
+    "east": "exerion:block/steel_casing",
+    "west": "exerion:block/steel_casing"
+  }
+}

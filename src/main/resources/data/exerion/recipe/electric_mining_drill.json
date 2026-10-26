@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SGS",
+    "SCS",
+    "SRS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "G": "exerion:iron_gear",
+    "C": "exerion:circuit_board",
+    "R": "exerion:exerion_rod"
+  },
+  "result": {
+    "id": "exerion:electric_mining_drill",
+    "count": 1
+  }
+}

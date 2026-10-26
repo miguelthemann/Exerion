@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "exerion:block/shaft" },
+    "axis=x": { "model": "exerion:block/shaft", "x": 90, "y": 90 },
+    "axis=z": { "model": "exerion:block/shaft", "x": 90 }
+  }
+}

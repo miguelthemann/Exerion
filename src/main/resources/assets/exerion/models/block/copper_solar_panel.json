@@ -1,0 +1,13 @@
+{
+  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "exerion:block/copper_solar_panel_top",
+    "down": "minecraft:block/copper_block",
+    "up": "exerion:block/copper_solar_panel_top",
+    "north": "minecraft:block/copper_block",
+    "south": "minecraft:block/copper_block",
+    "east": "minecraft:block/copper_block",
+    "west": "minecraft:block/copper_block"
+  }
+}

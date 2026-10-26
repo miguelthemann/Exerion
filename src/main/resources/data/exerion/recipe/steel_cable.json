@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "SSS",
+    "WWW"
+  ],
+  "key": {
+    "W": "minecraft:grey_wool",
+    "S": "exerion:steel_ingot"
+  },
+  "result": {
+    "id": "exerion:steel_cable",
+    "count": 6
+  }
+}

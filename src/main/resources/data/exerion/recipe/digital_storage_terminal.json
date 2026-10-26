@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ECE",
+    "CPC",
+    "ECE"
+  ],
+  "key": {
+    "E": "exerion:exerion_plate",
+    "C": "exerion:circuit_board",
+    "P": "exerion:progression_terminal"
+  },
+  "result": {
+    "id": "exerion:digital_storage_terminal",
+    "count": 1
+  }
+}

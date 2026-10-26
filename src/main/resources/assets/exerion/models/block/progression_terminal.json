@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "exerion:block/progression_terminal_top",
+    "bottom": "exerion:block/exerion_casing",
+    "side": "exerion:block/progression_terminal_side",
+    "front": "exerion:block/progression_terminal_front"
+  }
+}

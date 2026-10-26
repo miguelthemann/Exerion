@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+modId = "exerion"
+version = "1.0.4"
+displayName = "Exerion Progression"
+authors = "Salvador"
+description = '''Exerion Progression mod with technological eras, machines, kinetic power, electricity, and custom technology progression.'''
+
+[[dependencies.exerion]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.11.3-beta,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.exerion]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.11, 1.22)"
+ordering = "NONE"
+side = "BOTH"

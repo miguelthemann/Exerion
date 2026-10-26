@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "SSS",
+    "WWW"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "S": "exerion:steel_ingot",
+    "W": "exerion:steel_cable"
+  },
+  "result": {
+    "id": "exerion:steel_solar_panel",
+    "count": 1
+  }
+}

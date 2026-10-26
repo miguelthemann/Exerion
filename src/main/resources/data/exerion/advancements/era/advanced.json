@@ -1,0 +1,17 @@
+{
+  "parent": "exerion:era/digital",
+  "display": {
+    "icon": { "item": "exerion:exerion_solar_panel" },
+    "title": { "translate": "era.exerion.advanced" },
+    "description": { "translate": "era.exerion.advanced.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

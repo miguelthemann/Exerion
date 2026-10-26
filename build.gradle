@@ -1,0 +1,109 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.17.12'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+               "minecraft_version": project.minecraft_version,
+               "loader_version": project.loader_version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+java {
+    withSourcesJar()
+    // Force Java 25 toolchain
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+tasks.register("printClasses") {
+    doLast {
+        configurations.compileClasspath.files.each { file ->
+            if (file.name.contains("minecraft")) {
+                println "Found minecraft jar: " + file.absolutePath
+                def zipFile = new java.util.zip.ZipFile(file)
+                zipFile.entries().each { entry ->
+                    if (entry.name.contains("ResourceLocation")) {
+                        println "Entry: " + entry.name
+                    }
+                    if (entry.name.contains("Identifier")) {
+                        println "Entry (Identifier): " + entry.name
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.register("searchFabricAPI") {
+    doLast {
+        configurations.compileClasspath.files.each { file ->
+            if (file.name.contains("fabric") || file.name.contains("item-group") || file.name.contains("creative")) {
+                try {
+                    def zipFile = new java.util.zip.ZipFile(file)
+                    zipFile.entries().each { entry ->
+                        if (entry.name.contains("FabricCreativeModeTab") || entry.name.contains("FabricItemGroup") || entry.name.contains("itemgroup")) {
+                            println "In file: " + file.name + " -> " + entry.name
+                        }
+                    }
+                } catch (Exception e) {
+                    // Ignore non-zip files
+                }
+            }
+        }
+    }
+}
+
+tasks.register("inspectIdentifier") {
+    doLast {
+        def urls = configurations.compileClasspath.files.collect { it.toURI().toURL() } as URL[]
+        def classLoader = new URLClassLoader(urls, ClassLoader.systemClassLoader)
+        def clazz = classLoader.loadClass("net.minecraft.resources.Identifier")
+        println "Methods of net.minecraft.resources.Identifier:"
+        clazz.getDeclaredMethods().each { method ->
+            println " - " + method.toString()
+        }
+        println "Constructors:"
+        clazz.getDeclaredConstructors().each { constructor ->
+            println " - " + constructor.toString()
+        }
+    }
+}
+
+
+
+
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

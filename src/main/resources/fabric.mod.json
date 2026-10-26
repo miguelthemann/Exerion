@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "exerion",
+  "version": "1.0.4",
+  "name": "Exerion",
+  "description": "An industrial Minecraft mod transitioning from manual/steam mechanics to advanced technology.",
+  "authors": [
+    "salva"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/exerion/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.exerion.Exerion"
+    ],
+    "client": [
+      "net.exerion.ExerionClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.1.2",
+    "fabric-api": "*"
+  }
+}

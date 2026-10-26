@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "SCS",
+    "SMS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:circuit_board",
+    "M": "exerion:coal_boiler"
+  },
+  "result": {
+    "id": "exerion:alloy_smelter",
+    "count": 1
+  }
+}

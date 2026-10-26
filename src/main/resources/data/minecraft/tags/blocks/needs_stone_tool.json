@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "exerion:exerion_frame",
+    "exerion:exerion_casing",
+    "exerion:steel_casing",
+    "exerion:gear_press",
+    "exerion:coal_boiler",
+    "exerion:steam_turbine",
+    "exerion:crusher",
+    "exerion:copper_cable",
+    "exerion:copper_solar_panel"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "parent": "exerion:era/quantum",
+  "display": {
+    "icon": { "item": "exerion:mining_laser" },
+    "title": { "translate": "era.exerion.cosmic" },
+    "description": { "translate": "era.exerion.cosmic.desc" },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

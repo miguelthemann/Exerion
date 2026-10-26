@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "crushing=false": { "model": "exerion:block/crusher" },
+    "crushing=true": { "model": "exerion:block/crusher_active" }
+  }
+}

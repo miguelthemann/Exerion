@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "exerion:block/steel_casing",
+    "bottom": "exerion:block/steel_casing",
+    "side": "exerion:block/steel_casing",
+    "front": "exerion:block/compressor_active"
+  }
+}

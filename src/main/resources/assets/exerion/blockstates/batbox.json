@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "exerion:block/batbox" },
+    "facing=east": { "model": "exerion:block/batbox", "y": 90 },
+    "facing=south": { "model": "exerion:block/batbox", "y": 180 },
+    "facing=west": { "model": "exerion:block/batbox", "y": 270 }
+  }
+}

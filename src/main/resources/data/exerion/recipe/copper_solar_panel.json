@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "CCC",
+    "WWW"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "C": "minecraft:copper_ingot",
+    "W": "exerion:copper_cable"
+  },
+  "result": {
+    "id": "exerion:copper_solar_panel",
+    "count": 1
+  }
+}

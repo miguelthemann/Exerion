@@ -1,0 +1,41 @@
+{
+  "era.exerion.stone": "Кам'яний вік",
+  "era.exerion.copper": "Мідний вік",
+  "era.exerion.iron": "Залізний вік",
+  "era.exerion.mechanical": "Механічна ера",
+  "era.exerion.steel": "Сталевий / Паровий вік",
+  "era.exerion.industrial": "Індустріальна ера",
+  "era.exerion.digital": "Цифрова ера",
+  "era.exerion.advanced": "Просунута ера",
+  "era.exerion.quantum": "Квантова ера",
+  "era.exerion.cosmic": "Космічна ера",
+
+  "message.exerion.era_locked.block_break": "[Exerion] Ви не можете зламати цей блок. Потрібна %s!",
+  "message.exerion.era_locked.block_use": "[Exerion] Ви не можете взаємодіяти з цим блоком. Потрібна %s!",
+  "message.exerion.era_locked.item_use": "[Exerion] Ви не можете використовувати цей предмет. Потрібна %s!",
+  "message.exerion.era_unlocked": "[Exerion] Ви перейшли до %s!",
+  
+  "message.exerion.scanner_no_charge": "[Scanner] Немає заряду! Зарядіть у паровій турбіні.",
+  "message.exerion.scanner.block_info": "[Scanner] Блок: %s",
+  "message.exerion.scanner.era_info": "[Scanner] Необхідна ера: %s",
+  "message.exerion.scanner.current_era": "[Сканнер] Поточний рівень: %s",
+
+  "gui.exerion.guidebook.title": "Гайд Exerion",
+  "gui.exerion.guide.tab.intro": "ВСТУП",
+  "gui.exerion.guide.intro.welcome": "Ласкаво просимо до Exerion!",
+  "gui.exerion.guide.intro.desc1": "Використовуйте вкладки для навігації.",
+  "gui.exerion.guide.intro.how_to_progress": "Як розвиватися:",
+  "gui.exerion.guide.intro.step1": "1. Зберіть потрібні предмети.",
+  "gui.exerion.guide.intro.step2": "2. Вставте їх у Термінал Прогресії.",
+  "gui.exerion.guide.intro.step3": "3. Натисніть 'Advance Era'.",
+  "gui.exerion.guide.intro.sandbox": "Пісочниця: Машини вільні після розблокування!",
+  
+  "gui.exerion.guide.iron.gear_press": "Gear Press",
+  "gui.exerion.guide.iron.gear_press.desc": "Presses ingots into plates and gears.",
+  "gui.exerion.guide.iron.crusher": "Manual Crusher",
+  "gui.exerion.guide.iron.crusher.desc": "Crushes ores to double your resources.",
+  "gui.exerion.guide.mech.wrench": "Wrench",
+  "gui.exerion.guide.mech.wrench.desc": "Used to rotate blocks and safely remove machines.",
+  "gui.exerion.guide.steel.boiler": "Coal Boiler",
+  "gui.exerion.guide.steel.boiler.desc": "Boils water to produce high-pressure Steam Crystals."
+}

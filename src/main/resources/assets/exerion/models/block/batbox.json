@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "exerion:block/batbox_side",
+    "bottom": "exerion:block/batbox_side",
+    "side": "exerion:block/batbox_side",
+    "front": "exerion:block/batbox_front"
+  }
+}

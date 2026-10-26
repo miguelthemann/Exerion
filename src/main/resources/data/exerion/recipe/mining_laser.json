@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "SLS",
+    "SCS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "C": "exerion:circuit_board",
+    "L": "exerion:era_scanner"
+  },
+  "result": {
+    "id": "exerion:mining_laser",
+    "count": 1
+  }
+}

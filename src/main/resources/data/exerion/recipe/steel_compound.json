@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    " I ",
+    "   "
+  ],
+  "key": {
+    "C": "exerion:coal_dust",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "exerion:steel_compound",
+    "count": 1
+  }
+}

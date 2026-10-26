@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": "exerion:steel_compound",
+  "result": "exerion:steel_ingot",
+  "experience": 1.0,
+  "cookingtime": 150
+}

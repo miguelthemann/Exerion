@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "burning=false": { "model": "exerion:block/coal_boiler" },
+    "burning=true": { "model": "exerion:block/coal_boiler_active" }
+  }
+}

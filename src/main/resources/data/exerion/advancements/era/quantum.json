@@ -1,0 +1,17 @@
+{
+  "parent": "exerion:era/advanced",
+  "display": {
+    "icon": { "item": "exerion:frequency_ender_chest" },
+    "title": { "translate": "era.exerion.quantum" },
+    "description": { "translate": "era.exerion.quantum.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "unlocked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

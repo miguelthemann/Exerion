@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "exerion:block/exerion_solar_panel_top_active",
+    "down": "exerion:block/exerion_casing",
+    "up": "exerion:block/exerion_solar_panel_top_active",
+    "north": "exerion:block/exerion_casing",
+    "south": "exerion:block/exerion_casing",
+    "east": "exerion:block/exerion_casing",
+    "west": "exerion:block/exerion_casing"
+  }
+}

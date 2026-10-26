@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SGS",
+    "GTG",
+    "SGS"
+  ],
+  "key": {
+    "S": "exerion:steel_ingot",
+    "G": "exerion:iron_gear",
+    "T": "exerion:exerion_core"
+  },
+  "result": {
+    "id": "exerion:steam_turbine",
+    "count": 1
+  }
+}
